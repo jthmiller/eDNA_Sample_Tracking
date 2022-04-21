@@ -1,0 +1,53 @@
+﻿site,site_ID1,site2,site_ID2,site_ID3,Habitat,study,Latitude,Longitude
+Great Bay,GB,Adams Point,AP,OY,Oyster,NA,43.089105,-70.866876
+Great Bay,GB,Adams Point,AP,SE,Seagrass,NA,43.086525,-70.869876
+Great Bay,GB,Adams Point,AP,MU,Mud,NA,43.091404,-70.864432
+Great Bay,GB,Back Cove,BC,NA,NA,SN,43.118861,-70.847722
+Great Bay,GB,Fox Point,FP,NA,NA,SN,43.120833,-70.859222
+Great Bay,GB,Great Bay,GB,NA,NA,SW,43.0722,-70.8694
+Great Bay,GB,Herods Cove,HC,NA,NA,SN,43.071278,-70.857556
+Great Bay,GB,Lamprey River,LR,MU,Mud,NA,43.070106,-70.898582
+Great Bay,GB,Lamprey River,LR,OY,Oyster,NA,43.064912,-70.905891
+Great Bay,GB,Lamprey River,LR,SE,Seagrass,NA,43.071886,-70.884802
+Great Bay,GB,Lamprey River,LR,NA,NA,SW,43.08010339,-70.93451782
+Great Bay,GB,Nannie Island,NI,MU,Mud,NA,43.063462,-70.863173
+Great Bay,GB,Nannie Island,NI,OY,Oyster,NA,43.067806,-70.864017
+Great Bay,GB,Nannie Island,NI,SE,Seagrass,NA,43.070721,-70.857082
+Great Bay,GB,Oyster River,OR,NA,NA,SW,43.13440663,-70.90984305
+Great Bay,GB,Squamscott River,SQ,NA,NA,SW,43.052709,-70.91241726
+Great Bay,GB,Squamscott River,SQ,NA,NA,SN,43.122028,-70.873167
+Heeia,HE,Alaloa Bridge,AB ,NA,NA,NA,21.42368,-157.81068
+Heeia,HE,Auwai 1,AW,NA,NA,NA,21.43182,-157.8112
+Heeia,HE,DS Loi 1,DL,NA,NA,NA,21.43201,-157.81187
+Heeia,HE,Haptuk,HT,NA,NA,NA,21.42845,-157.81372
+Heeia,HE,Makaha Nui,MN,NA,NA,NA,21.43729,-157.80583
+Heeia,HE,New Bridge,NB,NA,NA,NA,21.4369,-157.81302
+Heeia,HE,Papahana,PH,NA,NA,NA,21.40926,-157.82335
+Heeia,HE,Stream Mouth,SM,NA,NA,NA,21.439965,-157.80881
+Heeia,HE,Wai 2,W2,NA,NA,NA,21.4383,-157.8109
+Heeia,HE,Wetland,KB,NA,NA,NA,21.434992,-157.81171
+Apalachicola,AP,West Pass,131,NA,NA,NA,29.6379,85.089
+Apalachicola,AP,Dry Bar,141,NA,NA,NA,29.6747,85.0583
+Apalachicola,AP,Pilots Cove,151,NA,NA,NA,29.60133,85.02765
+Apalachicola,AP,Mid Bay,161,NA,NA,NA,29.6677,84.994
+Apalachicola,AP,East Bay Bridge,171,NA,NA,NA,29.7308,84.9452
+Apalachicola,AP,East Bay Surface,181,NA,NA,NA,29.7858,84.8752
+Apalachicola,AP,Sikes Cut Offshore,201,NA,NA,NA,29.6067,84.9467
+Apalachicola,AP,Nicks Hole,211,NA,NA,NA,29.6504,84.9289
+Apalachicola,AP,Cat Point,221,NA,NA,NA,29.70213,84.8802
+Apalachicola,AP,River,231,NA,NA,NA,29.7791,85.0434
+South Slough,SS,Charleston Beach,CLI,NA,NA,NA,43.34523161,-124.3174866
+South Slough,SS,Distant Water Fleet,DWF,NA,NA,NA,43.33606294,-124.3188422
+South Slough,SS,Hinch Bridge,HIB,NA,NA,NA,NA,NA
+South Slough,SS,Long Island Point,LIP,NA,NA,NA,NA,NA
+South Slough,SS,Sengstacken,SEN,NA,NA,NA,43.29784134,-124.3106873
+South Slough,SS,Sitka Dock,SID,NA,NA,NA,NA,NA
+South Slough,SS,Stacey Beach,STB,NA,NA,NA,NA,NA
+South Slough,SS,Valino Island,VAL,NA,NA,NA,43.30836702,-124.3210661
+South Slough,SS,Valino SWMP,VSP,NA,NA,NA,NA,NA
+South Slough,SS,Winchester,WIN,NA,NA,NA,NA,NA
+South Slough,SS,Younker Point,YOP,NA,NA,NA,43.32181666,-124.3231184
+Wells,WL,Little River Mouth,LM,NA,NA,NA,43.202472, 70.3226.28
+Wells,WL,Skinner Mill,SM,NA,NA,NA,43.204215, 70.3259.64
+Wells,WL,Wells Harbor Inlet,IN,NA,NA,NA,43.191279, 70.3348.49
+Wells,WL,Head of Tide,HT,NA,NA,NA, 43.1753.96, 70.3513.14

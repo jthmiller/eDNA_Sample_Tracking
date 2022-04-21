@@ -1,0 +1,103 @@
+﻿sample_name,project,site,replicate,matrix,Volume,Extracted_Date,Qubit_Date,Qubit_ng_uL,Primer_ID,amp_date,reagent_ID_1,freezer_loc2,location_in_plate,plate_id,gel_image ,dilution,LID,FID
+tb1052721,aquaculture,Piscataqua,,tb,0.5,5/28/21,6/7/21,0,Mifish,6/10/21,NA,NA,A1,NA,NA,NA,1,1
+C2iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,3.92,Mifish,6/10/21,NA,NA,A2,NA,NA,NA,2,2
+C2iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,2.02,Mifish,6/10/21,NA,NA,A3,NA,NA,NA,3,3
+C2iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,4.9,Mifish,6/10/21,NA,NA,A4,NA,NA,NA,4,4
+C5iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,3.44,Mifish,6/10/21,NA,NA,A5,NA,NA,NA,5,5
+C5iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,4.66,Mifish,6/10/21,NA,NA,A6,NA,NA,NA,6,6
+C5iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,6.58,Mifish,6/10/21,NA,NA,A7,NA,NA,NA,7,7
+C8iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,3.06,Mifish,6/10/21,NA,NA,A8,NA,NA,NA,8,8
+C8iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,4.5,Mifish,6/10/21,NA,NA,A9,NA,NA,NA,9,9
+C8iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,3.34,Mifish,6/10/21,NA,NA,A10,NA,NA,NA,10,10
+P18iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,2.76,Mifish,6/10/21,NA,NA,A11,NA,NA,NA,11,11
+XB1052721,aquaculture,Piscataqua,NA,xb,NA,5/28/21,6/7/21,0,Mifish,6/10/21,NA,NA,A12,NA,NA,NA,12,12
+P18iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,0.71,Mifish,6/10/21,NA,NA,A13,NA,NA,NA,13,13
+P15iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,1.08,Mifish,6/10/21,NA,NA,A14,NA,NA,NA,14,14
+P15iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,1.28,Mifish,6/10/21,NA,NA,A15,NA,NA,NA,15,15
+P15iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,1.17,Mifish,6/10/21,NA,NA,A16,NA,NA,NA,16,16
+P12iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,1.41,Mifish,6/10/21,NA,NA,A17,NA,NA,NA,17,17
+P12iw052127b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,1.65,Mifish,6/10/21,NA,NA,A18,NA,NA,NA,18,18
+P12iw0521721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,1.76,Mifish,6/10/21,NA,NA,A19,NA,NA,NA,19,19
+F1iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,2.62,Mifish,6/10/21,NA,NA,A20,NA,NA,NA,20,20
+F1iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,2.78,Mifish,6/10/21,NA,NA,A21,NA,NA,NA,21,21
+XB2052721,aquaculture,Piscataqua,NA,xb,NA,5/28/21,6/7/21,0,Mifish,6/10/21,NA,NA,A22,NA,NA,NA,22,22
+F1iw052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,3.12,Mifish,6/10/21,NA,NA,A23,NA,NA,NA,23,23
+tb4052721,aquaculture,Piscataqua,NA,tb,0.5,6/2/21,6/2/21,0,Mifish,6/10/21,NA,NA,A24,NA,NA,NA,24,24
+P18ow052721a,aquaculture,Piscataqua,1,w,1,6/2/21,6/2/21,4.56,Mifish,6/10/21,NA,NA,A25,NA,NA,NA,25,25
+P18ow052721b,aquaculture,Piscataqua,2,w,1,6/2/21,6/2/21,6.04,Mifish,6/10/21,NA,NA,A26,NA,NA,NA,26,26
+P18ow052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,4.66,Mifish,6/10/21,NA,NA,A27,NA,NA,NA,27,27
+P15ow052721a,aquaculture,Piscataqua,1,w,1,6/2/21,6/2/21,3.98,Mifish,6/10/21,NA,NA,A28,NA,NA,NA,28,28
+P15ow052721b,aquaculture,Piscataqua,2,w,1,6/2/21,6/2/21,2.58,Mifish,6/10/21,NA,NA,A29,NA,NA,NA,29,29
+P15ow052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,3.28,Mifish,6/10/21,NA,NA,A30,NA,NA,NA,30,30
+P12ow052721a,aquaculture,Piscataqua,1,w,1,6/2/21,6/2/21,2.14,Mifish,6/10/21,NA,NA,A31,NA,NA,NA,31,31
+P12ow052721b,aquaculture,Piscataqua,2,w,1,6/2/21,6/2/21,2.58,Mifish,6/10/21,NA,NA,A32,NA,NA,NA,32,32
+P12ow052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,3.04,Mifish,6/10/21,NA,NA,A33,NA,NA,NA,33,33
+XB3060221,aquaculture,Piscataqua,NA,xb,NA,6/2/21,6/2/21,0,Mifish,6/10/21,NA,NA,A34,NA,NA,NA,34,34
+C2ow052721a,aquaculture,Piscataqua,1,w,1,6/4/21,6/7/21,5.48,Mifish,6/10/21,NA,NA,A35,NA,NA,NA,35,35
+C2ow052721b,aquaculture,Piscataqua,2,w,1,6/4/21,6/7/21,2.36,Mifish,6/10/21,NA,NA,A36,NA,NA,NA,36,36
+C2ow052721c,aquaculture,Piscataqua,3,w,1,6/4/21,6/7/21,7.54,Mifish,6/10/21,NA,NA,A37,NA,NA,NA,37,37
+C5ow052721a,aquaculture,Piscataqua,1,w,1,6/4/21,6/7/21,8.04,Mifish,6/10/21,NA,NA,A38,NA,NA,NA,38,38
+C5ow052721b,aquaculture,Piscataqua,2,w,1,6/4/21,6/7/21,4.96,Mifish,6/10/21,NA,NA,A39,NA,NA,NA,39,39
+C5ow052721c,aquaculture,Piscataqua,3,w,1,6/4/21,6/7/21,4.24,Mifish,6/10/21,NA,NA,A40,NA,NA,NA,40,40
+C8ow052721a,aquaculture,Piscataqua,1,w,1,6/4/21,6/7/21,6.86,Mifish,6/10/21,NA,NA,A41,NA,NA,NA,41,41
+C8ow052721b,aquaculture,Piscataqua,2,w,1,6/4/21,6/7/21,4.58,Mifish,6/10/21,NA,NA,A42,NA,NA,NA,42,42
+C8ow052721c,aquaculture,Piscataqua,3,w,1,6/4/21,6/7/21,3.04,Mifish,6/10/21,NA,NA,A43,NA,NA,NA,43,43
+tb3052721,aquaculture,Piscataqua,NA,tb,0.5,6/4/21,6/7/21,0,Mifish,6/10/21,NA,NA,A44,NA,NA,NA,44,44
+XB4060421,aquaculture,Piscataqua,NA,xb,NA,6/4/21,6/7/21,0,Mifish,6/10/21,NA,NA,A45,NA,NA,NA,45,45
+XB5060421,aquaculture,Piscataqua,NA,xb,NA,6/4/21,6/7/21,0,Mifish,6/10/21,NA,NA,A46,NA,NA,NA,46,46
+tb1052721,aquaculture,Piscataqua,,tb,0.5,5/28/21,6/7/21,0,18s,6/11/21,NA,NA,A47,NA,NA,NA,47,1
+C2iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,3.92,18s,6/11/21,NA,NA,A48,NA,NA,NA,48,2
+C2iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,2.02,18s,6/11/21,NA,NA,A49,NA,NA,NA,49,3
+C2iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,4.9,18s,6/11/21,NA,NA,A50,NA,NA,NA,50,4
+C5iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,3.44,18s,6/11/21,NA,NA,A51,NA,NA,NA,51,5
+C5iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,4.66,18s,6/11/21,NA,NA,A52,NA,NA,NA,52,6
+C5iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,6.58,18s,6/11/21,NA,NA,A53,NA,NA,NA,53,7
+C8iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,3.06,18s,6/11/21,NA,NA,A54,NA,NA,NA,54,8
+C8iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,4.5,18s,6/11/21,NA,NA,A55,NA,NA,NA,55,9
+C8iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,3.34,18s,6/11/21,NA,NA,A56,NA,NA,NA,56,10
+P18iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,2.76,18s,6/11/21,NA,NA,A57,NA,NA,NA,57,11
+XB1052721,aquaculture,Piscataqua,NA,xb,NA,5/28/21,6/7/21,0,18s,6/11/21,NA,NA,A58,NA,NA,NA,58,12
+P18iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,0.71,18s,6/11/21,NA,NA,A59,NA,NA,NA,59,13
+P15iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,1.08,18s,6/11/21,NA,NA,A60,NA,NA,NA,60,14
+P15iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,1.28,18s,6/11/21,NA,NA,A61,NA,NA,NA,61,15
+P15iw052721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,1.17,18s,6/11/21,NA,NA,A62,NA,NA,NA,62,16
+P12iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,1.41,18s,6/11/21,NA,NA,A63,NA,NA,NA,63,17
+P12iw052127b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,1.65,18s,6/11/21,NA,NA,A64,NA,NA,NA,64,18
+P12iw0521721c,aquaculture,Piscataqua,3,w,1,5/28/21,6/7/21,1.76,18s,6/11/21,NA,NA,A65,NA,NA,NA,65,19
+F1iw052721a,aquaculture,Piscataqua,1,w,1,5/28/21,6/7/21,2.62,18s,6/11/21,NA,NA,A66,NA,NA,NA,66,20
+F1iw052721b,aquaculture,Piscataqua,2,w,1,5/28/21,6/7/21,2.78,18s,6/11/21,NA,NA,A67,NA,NA,NA,67,21
+XB2052721,aquaculture,Piscataqua,NA,xb,NA,5/28/21,6/7/21,0,18s,6/11/21,NA,NA,A68,NA,NA,NA,68,22
+F1iw052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,3.12,18s,6/11/21,NA,NA,A69,NA,NA,NA,69,23
+tb4052721,aquaculture,Piscataqua,NA,tb,0.5,6/2/21,6/2/21,0,18s,6/11/21,NA,NA,A70,NA,NA,NA,70,24
+P18ow052721a,aquaculture,Piscataqua,1,w,1,6/2/21,6/2/21,4.56,18s,6/11/21,NA,NA,A71,NA,NA,NA,71,25
+P18ow052721b,aquaculture,Piscataqua,2,w,1,6/2/21,6/2/21,6.04,18s,6/11/21,NA,NA,A72,NA,NA,NA,72,26
+P18ow052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,4.66,18s,6/11/21,NA,NA,A73,NA,NA,NA,73,27
+P15ow052721a,aquaculture,Piscataqua,1,w,1,6/2/21,6/2/21,3.98,18s,6/11/21,NA,NA,A74,NA,NA,NA,74,28
+P15ow052721b,aquaculture,Piscataqua,2,w,1,6/2/21,6/2/21,2.58,18s,6/11/21,NA,NA,A75,NA,NA,NA,75,29
+P15ow052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,3.28,18s,6/11/21,NA,NA,A76,NA,NA,NA,76,30
+P12ow052721a,aquaculture,Piscataqua,1,w,1,6/2/21,6/2/21,2.14,18s,6/11/21,NA,NA,A77,NA,NA,NA,77,31
+P12ow052721b,aquaculture,Piscataqua,2,w,1,6/2/21,6/2/21,2.58,18s,6/11/21,NA,NA,A78,NA,NA,NA,78,32
+P12ow052721c,aquaculture,Piscataqua,3,w,1,6/2/21,6/2/21,3.04,18s,6/11/21,NA,NA,A79,NA,NA,NA,79,33
+XB3060221,aquaculture,Piscataqua,NA,xb,NA,6/2/21,6/2/21,0,18s,6/11/21,NA,NA,A80,NA,NA,NA,80,34
+C2ow052721a,aquaculture,Piscataqua,1,w,1,6/4/21,6/7/21,5.48,18s,6/11/21,NA,NA,A81,NA,NA,NA,81,35
+C2ow052721b,aquaculture,Piscataqua,2,w,1,6/4/21,6/7/21,2.36,18s,6/11/21,NA,NA,A82,NA,NA,NA,82,36
+C2ow052721c,aquaculture,Piscataqua,3,w,1,6/4/21,6/7/21,7.54,18s,6/11/21,NA,NA,A83,NA,NA,NA,83,37
+C5ow052721a,aquaculture,Piscataqua,1,w,1,6/4/21,6/7/21,8.04,18s,6/11/21,NA,NA,A84,NA,NA,NA,84,38
+C5ow052721b,aquaculture,Piscataqua,2,w,1,6/4/21,6/7/21,4.96,18s,6/11/21,NA,NA,A85,NA,NA,NA,85,39
+C5ow052721c,aquaculture,Piscataqua,3,w,1,6/4/21,6/7/21,4.24,18s,6/11/21,NA,NA,A86,NA,NA,NA,86,40
+C8ow052721a,aquaculture,Piscataqua,1,w,1,6/4/21,6/7/21,6.86,18s,6/11/21,NA,NA,A87,NA,NA,NA,87,41
+C8ow052721b,aquaculture,Piscataqua,2,w,1,6/4/21,6/7/21,4.58,18s,6/11/21,NA,NA,A88,NA,NA,NA,88,42
+C8ow052721c,aquaculture,Piscataqua,3,w,1,6/4/21,6/7/21,3.04,18s,6/11/21,NA,NA,A89,NA,NA,NA,89,43
+tb3052721,aquaculture,Piscataqua,NA,tb,0.5,6/4/21,6/7/21,0,18s,6/11/21,NA,NA,A90,NA,NA,NA,90,44
+XB4060421,aquaculture,Piscataqua,NA,xb,NA,6/4/21,6/7/21,0,18s,6/11/21,NA,NA,A91,NA,NA,NA,91,45
+XB5060421,aquaculture,Piscataqua,NA,xb,NA,6/4/21,6/7/21,0,18s,6/11/21,NA,NA,A92,NA,NA,NA,92,46
+MUAPs051221a2,habitat,Adams Point,2,s,NA,5/21/21,5/21/21,92.4,16s,6/24/21,NA,NA,NA,NA,NA,NA,93,47
+MUAPs051221a3,habitat,Adams Point,3,s,NA,5/21/21,5/21/21,92.8,16s,6/24/21,NA,NA,NA,NA,NA,NA,94,48
+MUAPs051221b1,habitat,Adams Point,1,s,NA,5/21/21,5/21/21,100,16s,6/24/21,NA,NA,NA,NA,NA,NA,95,49
+MUAPs051221b2,habitat,Adams Point,2,s,NA,5/21/21,5/21/21,91.4,16s,6/24/21,NA,NA,NA,NA,NA,NA,96,50
+MUAPs051221b3,habitat,Adams Point,3,s,NA,5/21/21,5/21/21,97,16s,6/24/21,NA,NA,NA,NA,NA,NA,97,51
+SEAPs051221a1,habitat,Adams Point,1,s,NA,5/21/21,5/21/21,106,16s,6/24/21,NA,NA,NA,NA,NA,NA,98,52
+SEAPs051221b1,habitat,Adams Point,1,s,NA,5/21/21,5/21/21,102,16s,6/24/21,NA,NA,NA,NA,NA,NA,99,53
+SEAPs051221b2,habitat,Adams Point,2,s,NA,5/21/21,5/21/21,104,16s,6/24/21,NA,NA,NA,NA,NA,NA,100,54
+SEAPs051221b3,habitat,Adams Point,3,s,NA,5/21/21,5/21/21,90.8,16s,6/24/21,NA,NA,NA,NA,NA,NA,101,55
+OYAPs051221a1,habitat,Adams Point,1,s,NA,5/21/21,5/21/21,102,16s,6/24/21,NA,NA,NA,NA,NA,NA,102,56

@@ -1,0 +1,57 @@
+﻿sample_name,project,site1,replicate,matrix,Collected_Date,Filtered_Date,freezer_loc,FID
+tb1052721,aquaculture,Piscataqua,,tb,5/27/21,5/27/21,NA,1
+C2iw052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,2
+C2iw052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,3
+C2iw052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,4
+C5iw052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,5
+C5iw052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,6
+C5iw052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,7
+C8iw052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,8
+C8iw052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,9
+C8iw052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,10
+P18iw052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,11
+XB1052721,aquaculture,Piscataqua,NA,xb,NA,NA,NA,12
+P18iw052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,13
+P15iw052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,14
+P15iw052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,15
+P15iw052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,16
+P12iw052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,17
+P12iw052127b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,18
+P12iw0521721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,19
+F1iw052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,20
+F1iw052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,21
+XB2052721,aquaculture,Piscataqua,NA,xb,NA,NA,NA,22
+F1iw052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,23
+tb4052721,aquaculture,Piscataqua,NA,tb,5/27/21,5/27/21,NA,24
+P18ow052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,25
+P18ow052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,26
+P18ow052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,27
+P15ow052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,28
+P15ow052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,29
+P15ow052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,30
+P12ow052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,31
+P12ow052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,32
+P12ow052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,33
+XB3060221,aquaculture,Piscataqua,NA,xb,NA,NA,NA,34
+C2ow052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,35
+C2ow052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,36
+C2ow052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,37
+C5ow052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,38
+C5ow052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,39
+C5ow052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,40
+C8ow052721a,aquaculture,Piscataqua,1,w,5/27/21,5/27/21,NA,41
+C8ow052721b,aquaculture,Piscataqua,2,w,5/27/21,5/27/21,NA,42
+C8ow052721c,aquaculture,Piscataqua,3,w,5/27/21,5/27/21,NA,43
+tb3052721,aquaculture,Piscataqua,NA,tb,5/27/21,5/27/21,NA,44
+XB4060421,aquaculture,Piscataqua,NA,xb,NA,NA,NA,45
+XB5060421,aquaculture,Piscataqua,NA,xb,NA,NA,NA,46
+MUAPs051221a2,habitat,Adams Point,2,s,5/12/21,NA,NA,47
+MUAPs051221a3,habitat,Adams Point,3,s,5/12/21,NA,NA,48
+MUAPs051221b1,habitat,Adams Point,1,s,5/12/21,NA,NA,49
+MUAPs051221b2,habitat,Adams Point,2,s,5/12/21,NA,NA,50
+MUAPs051221b3,habitat,Adams Point,3,s,5/12/21,NA,NA,51
+SEAPs051221a1,habitat,Adams Point,1,s,5/12/21,NA,NA,52
+SEAPs051221b1,habitat,Adams Point,1,s,5/12/21,NA,NA,53
+SEAPs051221b2,habitat,Adams Point,2,s,5/12/21,NA,NA,54
+SEAPs051221b3,habitat,Adams Point,3,s,5/12/21,NA,NA,55
+OYAPs051221a1,habitat,Adams Point,1,s,5/12/21,NA, ,56

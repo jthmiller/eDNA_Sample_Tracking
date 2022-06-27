@@ -6,6 +6,9 @@ library(lubridate)
 
 filtersdb <- read.csv('data_prep/filtersdb.csv', stringsAsFactors=F)
 
+filtersdb <- read.csv('data_prep/filtersdb.new.csv', stringsAsFactors=F)
+
+
 
 filtersdb$Collected_Date <- as.character(as.POSIXlt(as.Date(filtersdb$Collected_Date)))
 filtersdb$Filtered_Date <- as.character(as.POSIXlt(as.Date(filtersdb$Filtered_Date)))

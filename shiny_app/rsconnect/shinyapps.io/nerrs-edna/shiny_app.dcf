@@ -1,0 +1,11 @@
+name: shiny_app
+title:
+username:
+account: nerrs-edna
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6185360
+bundleId: 5843928
+url: https://nerrs-edna.shinyapps.io/shiny_app/
+when: 1651084953.29554
+lastSyncTime: 1651084953.29555

@@ -9,20 +9,42 @@ server <- function(input, output, session) {
 
 
   # Call the server function portion of the `samples_table_module.R` module file
+
+  # First call the database server
+
+ #dat <- callModule(
+ #   sample_table_module,
+ #   "sample_table"
+ # )
+
+  
+
+
+
   callModule(
     sample_table_module,
-    "sample_table"
+    id = "sample_table"
   )
 
   callModule(
     sample_table_module,
     "sample_selected",
-    display_col_extract
+    display_col_pcr
+  )
+
+  callModule(
+    sample_table_module,
+    "sample_selected2",
+    display_col_pcr
   )
   
-  #callModule(
-  #  sample_extraction_module
-  #)
+  callModule(
+    sample_extraction_module,
+      "text"
+  )
+
+
+
 
   #callModule(
   #  sample_select_module,

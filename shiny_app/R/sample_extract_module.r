@@ -6,7 +6,11 @@
 sample_extraction_ui <- function(id) {
   
     ns <- NS(id)
+
     tagList(
+        fluidRow(
+            textOutput("text")
+        ),
         fluidRow(
             box( 
               title = 'Dates',
@@ -22,4 +26,8 @@ sample_extraction_ui <- function(id) {
 
 
 
-sample_extraction_module <- function(input, output, display_col_extract){ }
+sample_extraction_module <- function(input, output, session){
+
+
+      output$text <- renderText({ "You have selected this"})
+ }

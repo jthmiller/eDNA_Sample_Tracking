@@ -33,6 +33,7 @@ submodule_edit <- function(input, output, session, modal_title, sample_to_edit, 
         fluidRow(
           column(
             width = 6,
+            numericInput(ns('batch'), 'Number of Samples to Add', 1, min = 1, max = 20),
             selectInput(ns('project'), 'Choose Project', c('NERRs', 'Other'), selected = ifelse(is.null(hold), "", hold$project)),
             selectInput(ns('site1'), 'Site1', levels(sites$site)),
             selectInput(ns('site2'), 'Site2', levels(sites$site2)),

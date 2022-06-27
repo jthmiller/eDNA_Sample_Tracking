@@ -81,7 +81,24 @@ sample_select_pcr_ui <- function(id) {
 }
 
 
+sample_select_lookup_ui <- function(id) {
+  
+  ns <- NS(id)
 
+  tagList(
+    fluidRow(
+      column(
+        width = 6,
+        title = "Samples to add to the database",
+        DTOutput(ns('sample_select2'))
+      ),
+      column(
+        width = 6,
+        DTOutput(ns('sample_selected2'))
+      )
+    ) 
+  )
+}
 
 
 
@@ -105,39 +122,39 @@ sample_select_pcr_ui <- function(id) {
 #    id,
 #    function(input, output, session) {
 
-sample_table_module <- function(input, output, session, display_col_extract){
+sample_table_module <- function(input, output, session, display_col_pcr){
 
-  # trigger to reload data from the "samples" table
-  session$userData$samples_trigger <- reactiveVal(0)
+      # trigger to reload data from the "samples" table
+      session$userData$samples_trigger <- reactiveVal(0)
 
-  # Read in table from the database
-  samples <- reactive({
+      # Read in table from the database
+      samples <- reactive({
 
-    session$userData$samples_trigger()
+        session$userData$samples_trigger()
 
-    out <- NULL
-    tryCatch({
-      out <- conn %>%
-        tbl('filtersdb') %>%
-        collect() %>%
-        mutate(
-          created_at = as.POSIXct(created_at, tz = "UTC"),
-          modified_at = as.POSIXct(modified_at, tz = "UTC")
-        ) %>%
-        arrange(desc(modified_at))
-    }, error = function(err) {
-      msg <- "Database Connection Error"
-      # print `msg` so that we can find it in the logs
-      print(msg)
-      # print the actual error to log it
-      print(error)
-      # show error `msg` to user.  User can then tell us about error and we can
-      # quickly identify where it cam from based on the value in `msg`
-      showToast("error", msg)
-    })
+        out <- NULL
+        tryCatch({
+          out <- conn %>%
+            tbl('filtersdb') %>%
+            collect() %>%
+            mutate(
+              created_at = as.POSIXct(created_at, tz = "UTC"),
+              modified_at = as.POSIXct(modified_at, tz = "UTC")
+            ) %>%
+            arrange(desc(modified_at))
+        }, error = function(err) {
+          msg <- "Database Connection Error"
+          # print `msg` so that we can find it in the logs
+          print(msg)
+          # print the actual error to log it
+          print(error)
+          # show error `msg` to user.  User can then tell us about error and we can
+          # quickly identify where it cam from based on the value in `msg`
+          showToast("error", msg)
+        })
 
-    out
-  })
+        out
+      })
 
   ## first run set null
   sample_table_prep <- reactiveVal(NULL)
@@ -186,9 +203,6 @@ sample_table_module <- function(input, output, session, display_col_extract){
     }
   })
 
-
-
-
   ### TRY TO MAKE SELECTABLE TABLE
   output$sample_select <- DT::renderDT({
     req(sample_table_prep())
@@ -197,7 +211,7 @@ sample_table_module <- function(input, output, session, display_col_extract){
     ## drop html button column
     out <- out[,-1]
 
-    out <- out[,display_col] 
+    out <- out[,display_col_pcr] 
 
     print(head(out))
     datatable(data = out,
@@ -234,8 +248,53 @@ sample_table_module <- function(input, output, session, display_col_extract){
   })
   ### TRY TO MAKE SELECTABLE TABLE
 
+## TRY TO MAKE SELECTABLE TABLE2
+  output$sample_select2 <- DT::renderDT({
+    req(sample_table_prep())
+    out <- sample_table_prep()
 
-  ### Display table
+    ## drop html button column
+    out <- out[,-1]
+
+    out <- out[,display_col_pcr] 
+
+    print(head(out))
+    datatable(data = out,
+               # Escape the HTML in all except 1st column (which has the buttons)
+               #escape = -1,
+               rownames = FALSE,
+               colnames = colnames(out),
+               extensions = 'Buttons',
+               selection = 'multiple',
+               options = list( 
+                dom = "Blfrtip",
+                buttons = 
+                   list("copy", 
+                     list(
+                       extend = "collection",
+                       buttons = c("csv", "excel", "pdf"),
+                       text = "Download"
+                      ) 
+                    ), # end of buttons customization
+                 
+                  # customize the length menu
+                lengthMenu = list(
+                              c(10, 20, -1), # declare values
+                              c(10, 20, "All") # declare titles
+                              ), # end of lengthMenu customization
+                pageLength = 10,
+                columnDefs = list(
+                  list(className = 'dt-center', targets = "_all")
+                  #list(targets = 10, orderable = TRUE)
+                )
+              ) # end of options
+    ) # end of datatables
+
+  })
+  ### TRY TO MAKE SELECTABLE TABLE
+  
+
+  ### Selected table display
   output$sample_selected <- renderDT({
     req(sample_table_prep())
     out <- sample_table_prep()
@@ -244,7 +303,7 @@ sample_table_module <- function(input, output, session, display_col_extract){
     out <- out[,-1]
     s = input$sample_select_rows_selected
     out <- out[s,]
-    out <- out[,display_col] 
+    out <- out[,display_col_pcr] 
 
     datatable(out,
       rownames = FALSE,
@@ -270,7 +329,52 @@ sample_table_module <- function(input, output, session, display_col_extract){
     )
 
   })
-  ### Display table
+  ### Selected table display
+
+
+ ### Selected2 table display
+  output$sample_selected2 <- renderDT({
+    req(sample_table_prep())
+    out <- sample_table_prep()
+
+    ## drop html button column
+    out <- out[,-1]
+    s = input$sample_select_rows_selected
+    out <- out[s,]
+    out <- out[,display_col_pcr] 
+
+    datatable(out,
+      rownames = FALSE,
+      colnames = colnames(out),
+      selection = "none",
+      class = "compact stripe row-border nowrap",
+      # Escape the HTML in all except 1st column (which has the buttons)
+      escape = -1,
+      extensions = c("Buttons"),
+      options = list(
+        buttons = list(
+          list(
+            columnDefs = list(list(className = 'dt-center', targets = "_all")),
+            extend = "excel",
+            text = "Edit",
+            title = paste0("samples-", Sys.Date()),
+            exportOptions = list(
+              columns = 1:(length(out) - 1)
+            )
+          )
+        )      
+      )
+    )
+
+  })
+  ### Selected table display
+
+
+
+#
+
+
+
 
   ## Main sample edit table
   output$sample_table <- renderDT({
@@ -278,6 +382,7 @@ sample_table_module <- function(input, output, session, display_col_extract){
     out <- sample_table_prep()
 
     print(head(out))
+    print(table(out$replicate))
     datatable(
       out,
       rownames = FALSE,
@@ -320,6 +425,9 @@ sample_table_module <- function(input, output, session, display_col_extract){
 
 
   sample_table_proxy <- DT::dataTableProxy('sample_table')
+
+
+
 
   callModule(
     submodule_edit,

@@ -46,7 +46,7 @@ options(spinner.type = 8)
 #extraction_sheet <- colnames(Lab)[!colnames(Lab) %in% colnames(Filters)]
 
 ## TO DO: Make this SQLite database
-sites <- read.csv('../data_prep/site_info.csv', stringsAsFactors=T)
+sites <- read.csv('data/site_info.csv', stringsAsFactors=T)
 
 display_col_extract <- c('project','site1','site2','replicate','matrix','Type','Collected_Date','Filtered_Date')
 display_col_pcr <- c('project','site1','site2','replicate','matrix','Type','Collected_Date','Filtered_Date')

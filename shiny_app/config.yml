@@ -1,5 +1,0 @@
-default:
-  app_name: "crud_traditional"
-  db:
-    dbname: 'data/filtersdb.sqlite3'
- 

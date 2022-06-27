@@ -3,7 +3,7 @@ library(tidyr)
 library(tibble)
 library(RSQLite)
 Filters <- read.csv('data/FID.csv', stringsAsFactors=T)
-filtersdb <- Filters[,c('sample_name','project','site','replicate','matrix','Collected_Date','Filtered_Date')]
+filtersdb <- Filters[,c('sample_name','project','site','set_number','matrix','Collected_Date','Filtered_Date')]
 saveRDS(filtersdb, file = 'data/filtersdb.RDS')
 # Create a connection object with SQLite
 conn <- dbConnect(
@@ -20,7 +20,7 @@ create_samples_query = "CREATE TABLE filtersdb (
   Collected_Date                  TEXT,
   Filtered_Date                   TEXT,
   matrix                          TEXT,
-  replicate                       REAL,
+  set_number                       REAL,
   blank                           TEXT,
   FID                             REAL,
   created_at                      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -51,7 +51,7 @@ head(Filters)
 Filters <- read.csv('data/FID.csv', stringsAsFactors=T)
 Filters$site2 <- NA
 head(Filters)
-filtersdb <- Filters[,c('project','site1','site2','replicate','matrix','Collected_Date','Filtered_Date')]
+filtersdb <- Filters[,c('project','site1','site2','set_number','matrix','Collected_Date','Filtered_Date')]
 saveRDS(filtersdb, file = 'data/filtersdb.RDS')
 conn <- dbConnect(
   RSQLite::SQLite(),
@@ -65,7 +65,7 @@ create_samples_query = "CREATE TABLE filtersdb (
   Collected_Date                  TEXT,
   Filtered_Date                   TEXT,
   matrix                          TEXT,
-  replicate                       REAL,
+  set_number                       REAL,
   blank                           TEXT,
   FID                             REAL,
   created_at                      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

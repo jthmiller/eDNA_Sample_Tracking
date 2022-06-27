@@ -4,11 +4,8 @@ library(tibble)
 library(RSQLite)
 library(lubridate)
 
-filtersdb <- read.csv('data_prep/filtersdb.csv', stringsAsFactors=F)
-
+##filtersdb <- read.csv('data_prep/filtersdb.csv', stringsAsFactors=F)
 filtersdb <- read.csv('data_prep/filtersdb.new.csv', stringsAsFactors=F)
-
-
 
 filtersdb$Collected_Date <- as.character(as.POSIXlt(as.Date(filtersdb$Collected_Date)))
 filtersdb$Filtered_Date <- as.character(as.POSIXlt(as.Date(filtersdb$Filtered_Date)))
@@ -40,7 +37,7 @@ create_filter_query = "CREATE TABLE filtersdb (
   Filtered_Date                   DATE,
   matrix                          TEXT,
   type                            TEXT,
-  replicate                       REAL,
+  set_number                      REAL,
   blank                           TEXT,
   FID                             REAL,
   created_at                      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -44,7 +44,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
                   dateInput(ns("Collected_Date"), "Date Collected", value = as.Date('1984-02-02')),
                   dateInput(ns("Filtered_Date"), "Date Filtered", value = as.Date('1984-02-02')),
                   selectInput(ns('matrix'), 'Matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
-                  selectInput(ns('replicate'), 'Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$replicate)),
+                  selectInput(ns('set_number'), 'Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
                   selectInput(ns('Type'), 'Sample Type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$Type)),
                   selectInput(ns('user'), "Username", c('Jmiller', 'Awatts'))
                   ##uiOutput('add_sample')
@@ -91,7 +91,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               "Filtered_Date" = if (is.null(input$Filtered_Date)) 'NA' else input$Filtered_Date,
               "matrix" = if (is.null(input$matrix)) 'NA' else input$matrix,
               "Type" = if (is.null(input$Type)) 'NA' else input$Type,
-              "replicate" = if (is.null(input$replicate)) 'NA' else input$replicate
+              "set_number" = if (is.null(input$set_number)) 'NA' else input$set_number
               ## "add_sample" = input$add_sample,
             )
           )
@@ -136,14 +136,14 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
             if (is.na(dat$uid)) {
               print('creating new samples ...')
               uid <- uuid::UUIDgenerate()
-              #dat$data$replicate <- rep
+              #dat$data$set_number <- rep
               ##print(c('adding',
               ##    list(uid),
               ##    unname(dat$data)
               ##  ))
               dbExecute(
                 conn,
-                "INSERT INTO filtersdb (uid, project, site1, site2, Collected_date, Filtered_Date, matrix, type, replicate, created_at, created_by, modified_at, modified_by) VALUES
+                "INSERT INTO filtersdb (uid, project, site1, site2, Collected_date, Filtered_Date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
                 ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
                 params = c(
                   list(uid),
@@ -156,7 +156,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               print(unname(dat$data))
               dbExecute(
                 conn,
-                "UPDATE filtersdb SET project=$1, site1=$2, site2=$3, Collected_date=$4, Filtered_Date=$5, matrix=$6, type=$7, replicate=$8, created_at=$9, created_by=$10, modified_at=$11, modified_by=$12 WHERE uid=$13",
+                "UPDATE filtersdb SET project=$1, site1=$2, site2=$3, Collected_date=$4, Filtered_Date=$5, matrix=$6, type=$7, set_number=$8, created_at=$9, created_by=$10, modified_at=$11, modified_by=$12 WHERE uid=$13",
                 params = c(
                   unname(dat$data),
                   list(dat$uid)

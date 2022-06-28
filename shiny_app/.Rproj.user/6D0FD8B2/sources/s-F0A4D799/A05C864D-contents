@@ -31,11 +31,6 @@ sample_extractions_module_ui <- function(id) {
         tags$br()
       )
     ),
-    fluidRow( 
-      actionButton("browser", "browser")
-    ),
-    
-    tags$script("$('#browser').hide();"),
     ##includeScript(path = "sample_table_module.js"),
     tags$script(src = "sample_table_module.js"),
     tags$script(paste0("Database_js('", ns(''), "')"))

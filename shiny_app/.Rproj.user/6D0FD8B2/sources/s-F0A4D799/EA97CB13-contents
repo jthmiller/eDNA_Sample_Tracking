@@ -1,0 +1,8 @@
+
+### DEBUGGING
+# Add to your UI:
+actionButton("browser", "browser"),tags$script("$('#browser').hide();")
+# Add to your server 
+observeEvent(input$browser,{
+  browser()
+})

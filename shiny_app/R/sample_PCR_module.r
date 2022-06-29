@@ -20,34 +20,40 @@ sample_PCR_module_ui <- function(id) {
       )
     ),
     fluidRow(
+      
       column(width = 6,
-        box( 
-          dateInput("Extracted", label = "Extracted:"),
-          dateInput("PCR_Step_1", label = "PCR Step 1:"),
-          dateInput("Qbited", label = "Qbited:"),
-          selectInput('Storage',  label = 'Choose Storage', c('Strip Tubes','PCR Plate')),
-          dateInput("Dil_1_10", label = "Straight DNA Diluted 1:10:"),
-          dateInput("HCGS", label = "Undiluted Step 1 PCR given to Jeff with list of samples:"),
-          dateInput("Sequenced", label = "Sequenced:"),
-          fileInput('gels', label = 'Gel Picture Upload', multiple = T, accept='image/*')
+        fluidRow(
+          box( 
+            dateInput("Extracted", label = "Extracted:"),
+            dateInput("PCR_Step_1", label = "PCR Step 1:"),
+            dateInput("Qbited", label = "Qbited:"),
+            selectInput('Storage',  label = 'Choose Storage', c('Strip Tubes','PCR Plate')),
+            dateInput("Dil_1_10", label = "Straight DNA Diluted 1:10:"),
+            dateInput("HCGS", label = "Undiluted Step 1 PCR given to Jeff with list of samples:"),
+            dateInput("Sequenced", label = "Sequenced:"),
+            fileInput('gels', label = 'Gel Picture Upload', multiple = T, accept='image/*')
+          )
         ),
+        fluidRow(
+          actionButton("edit_samples","Edit Batch")
+        )  
       ),
+
+
       column(width = 6,
-        box(   
-          textInput('qbit_val', 'Qbit Conc.')
+        fluidRow(
+          box(   
+            textInput('qbit_val', 'Qbit Conc.')
+          )
+        ),
+        fluidRow(
+          column(width = 6,
+            actionButton("edit_sample","Edit Sample")
+          )
         )
       )
-    ),
-    fluidRow(
-      column(width = 6,
-        actionButton("edit_samples","Edit Batch")
-        ## actionButton(NS(id, "btn"), label = "Go")
-        ## button_ui("mod1")
-      ),
-      column(width = 6, 
-        actionButton("edit_sample","Edit Sample")
-      )  
-    )
+
+    ) 
   )
 }
 

@@ -350,16 +350,19 @@ sample_table_module <- function(id, disp, lines = NA) {
 #
         #})
 #
-        samples_to_edit <- eventReactive(input$sample_select_rows_selected, {
-          #out <- samples() %>%
-          #  filter(uid == input$sample_select_rows_selected) %>%
-          #  as.list()
-          #  print(input$sample_select_rows_selected)
-          out <- samples()
-          s = input$sample_select_rows_selected
-          out <- out[s,]
-          print(head(out))
-        })
+
+        ## observeEvent(button(), { print('hw button works') })
+
+        #samples_to_edit <- eventReactive(input$sample_select_rows_selected, {
+        #  #out <- samples() %>%
+        #  #  filter(uid == input$sample_select_rows_selected) %>%
+        #  #  as.list()
+        #  #  print(input$sample_select_rows_selected)
+        #  out <- samples()
+        #  s = input$sample_select_rows_selected
+        #  out <- out[s,]
+        #  print(head(out))
+        #})
         
 
         #sample_to_edit <- eventReactive(input$sample_id_to_edit, {

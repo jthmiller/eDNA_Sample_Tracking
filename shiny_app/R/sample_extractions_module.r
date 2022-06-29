@@ -18,9 +18,25 @@ sample_extractions_module_ui <- function(id) {
         DTOutput(ns('sample_selected'))
       )
     ),
-    ##includeScript(path = "sample_table_module.js"),
-    tags$script(src = "sample_table_module.js"),
-    tags$script(paste0("Database_js('", ns(''), "')"))
+    fluidRow(
+      column(
+        width = 8,
+        fluidRow(
+          box( 
+            title = 'Dates',
+            dateInput(inputId = "Collected", label = "Collected:"),
+            dateInput(inputId = "Extracted", label = "Extracted:"),
+            dateInput(inputId = "Filtered", label = "Filtered:"),
+            dateInput(inputId = "Cut_Half", label = "Cut in Half:")
+          )
+        ),
+        fluidRow(
+          column(width = 8,
+            actionButton("edit_samples","Edit Samples")
+          )
+        )
+      )
+    )
   )
 }
 

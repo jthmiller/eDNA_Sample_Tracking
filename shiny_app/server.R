@@ -25,9 +25,9 @@ server <- function(input, output, session) {
   #plot2vars <- callModule(sample_table_module, "plot2_vars")
   
   # this is helpful: https://stackoverflow.com/questions/47576792/how-to-use-callmodule-from-within-another-module-can-i-use-the-same-id
-
-  sample_table_module("collection_module", disp = display_col_pcr)
-  sample_PCR_module("PCR_module",  disp = display_col_pcr)
+  button <- button_server("mod1")
+  sample_table_module("collection_module", disp = display_col_pcr, button)
+  sample_PCR_page("PCR_module",  disp = display_col_pcr, button)
   sample_extractions_module("extractions_module",  disp = display_col_pcr)
   
   observeEvent(input$browser,{

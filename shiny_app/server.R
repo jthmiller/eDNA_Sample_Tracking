@@ -30,10 +30,7 @@ server <- function(input, output, session) {
   sample_PCR_page("PCR_module",  disp = display_col_pcr, button)
   sample_extractions_module("extractions_module",  disp = display_col_pcr)
   
-  observeEvent(input$browser,{
-    browser()
-  })
-  
+
   ## dat <- sample_table_module("sample_table", disp = display_col_pcr)
   ## dat <- sample_table_module("sample_table", disp = display_col_pcr)
 

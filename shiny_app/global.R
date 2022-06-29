@@ -18,8 +18,6 @@ library(config)
 
 library(sqldf)
 
-source('R/functions.R')
-
 db_config <- config::get()$db
 
 # Create database connection

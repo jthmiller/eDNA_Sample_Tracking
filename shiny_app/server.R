@@ -26,9 +26,11 @@ server <- function(input, output, session) {
   
   # this is helpful: https://stackoverflow.com/questions/47576792/how-to-use-callmodule-from-within-another-module-can-i-use-the-same-id
   button <- button_server("mod1")
-  sample_table_module("collection_module", disp = display_col_pcr, button)
-  sample_PCR_page("PCR_module",  disp = display_col_pcr, button)
-  sample_extractions_module("extractions_module",  disp = display_col_pcr)
+
+
+  collections_page_server("collections_page")
+  PCR_page_server("PCR_page")
+  extractions_page_server("extractions_page")
   
 
   ## dat <- sample_table_module("sample_table", disp = display_col_pcr)

@@ -42,10 +42,10 @@ submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
                   selectInput(ns('site1'), 'Site1', levels(sites$site)),
                   selectInput(ns('site2'), 'Site2', levels(sites$site2)),
                   dateInput(ns("Collected_Date"), "Date collected", value = as.Date('1984-02-02')),
-                  #dateInput(ns("Filtered_Date"), "Date Filtered", value = as.Date('1984-02-02')),
-                  #selectInput(ns('matrix'), 'Choose matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
+                  dateInput(ns("Filtered_Date"), "Date Filtered", value = as.Date('1984-02-02')),
+                  selectInput(ns('matrix'), 'Choose matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
                   #selectInput(ns('set_number'), 'Choose Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
-                  #selectInput(ns('Type'), 'Choose Sample type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$Type)),
+                  selectInput(ns('Type'), 'Choose Sample type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$Type)),
                   selectInput(ns('user'), "Username", c('Jmiller', 'Awatts'))
                   ##uiOutput('add_sample')
                 )

@@ -2,7 +2,7 @@
 
 ### database simple
 
-sample_PCR_module_ui <- function(id) {
+PCR_page_ui <- function(id) {
 
   ns <- NS(id)
 
@@ -35,7 +35,7 @@ sample_PCR_module_ui <- function(id) {
           )
         ),
         fluidRow(
-          actionButton("edit_samples","Edit Batch")
+          actionButton(ns('edit_batch'),"Edit Batch")
         )  
       ),
 
@@ -58,9 +58,12 @@ sample_PCR_module_ui <- function(id) {
 }
 
 
-sample_PCR_page <- function(id, disp, lines = NA, button) {
+PCR_page_server <- function(id, disp, lines = NA, button) {
+
+      display_col <- c('project','site1','site2','matrix','Type','Collected_Date','Filtered_Date')
 
       button <- button_server("mod1")
-      sample_table_module("PCR_module", disp = display_col_pcr, button)
+
+      sample_table_module("PCR_page", display_col)
 
 }

@@ -1,5 +1,3 @@
-### database simple
-
 #' Sample Table Module Server
 #'
 #' The Server portion of the module for displaying the sample datatable
@@ -18,23 +16,15 @@
 ## output a df, inport df() in other functions
 ## use df() inside server (bc values are reactive)
 ## , display_col_pcr , display_col_pcr
-sample_table_module <- function(id, disp, lines = NA) {
+sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
 
-### sample_table_module <- function(id, disp) {
-  ## print(disp)
-  # trigger to reload data from the "samples" table
-  
   moduleServer(
     id,
     function(input, output, session){
 
-      ## print('made it inside moduleServer')
-
       session$userData$samples_trigger <- reactiveVal(0)
-      #sample_table_module <- function(input, output, session, display_col_pcr){
-      # Read in table from the database
 
-      ## initialize from database
+      # Read in table from the database      
       samples <- reactive({
 
         session$userData$samples_trigger()
@@ -61,8 +51,9 @@ sample_table_module <- function(id, disp, lines = NA) {
         })
         out
       })
+      #### full table ######
 
-      ## first run set null
+      ## Prep interactive dt
       sample_table_prep <- reactiveVal(NULL)
 
       ## react to samples() edit
@@ -77,133 +68,103 @@ sample_table_module <- function(id, disp, lines = NA) {
             </div>'
           )
         })
+
         # Remove the `uid` column. We don't want to show this column to the user
-        out <- out %>%
-            #select(-c(uid,created_at,created_by,modified_at,modified_by))
-            select(-uid)
-            # Set the Action Buttons row to the first column of the `samples` table
-        out <- cbind(
-            tibble(" " = actions),
-            out
-        )
+        out <- out %>% select(-uid)
+
+        # Set the Action Buttons row to the first column of the `samples` table
+        out <- cbind(tibble(" " = actions), out)
+
         if (is.null(sample_table_prep())) {
             # loading data into the table for the first time, so we render the entire table
             # rather than using a DT proxy
             # set prep to out
             sample_table_prep(out)
-            output$table <- renderDT({  
-              out <- sample_table_prep()
-              out <- out[,-1]
-              datatable(out)
-            })
+
         } else {
             # table has already rendered, so use DT proxy to update the data in the
             # table without rerendering the entire table
             replaceData(sample_table_proxy, out, resetPaging = FALSE, rownames = FALSE)
-            output$table <- renderDT({  
-              out <- out[,-1]
-              datatable(out)
-            })
         }
       }) 
-    
-      ## export data to other modules
+      #### initialize samples from database ####
 
-      ## THIS WORKS
-      #return( 
-      #  reactive({
-      #    df <- sample_table_prep()
-      #    return(df)   
-      #  })
-      #)     
-
-
-      ##return(
-      ##  list(
-      ##    sample_table_prep = reactive({ sample_table_prep() }),
-      ##    samples = reactive({ samples() }),
-      ##    sample_table_proxy = reactive({ sample_table_proxy() })
-      ##  )
-      ##)
-        
-        ## Lookup table
-      ##observeEvent(samples(), {  
-      ##  output$table <- renderDT({  
-      ##          out <- sample_table_prep()
-      ##          out <- out[,-1]
-      ##          datatable(out)
-      ##  })
-      ##}
-
-
-        ## Main sample edit table
-        output$sample_table <- renderDT({
-          req(sample_table_prep())
-          out <- sample_table_prep()
-          #print(head(out))
-          #print(table(out$replicate))
-          datatable(
-            out,
-            rownames = FALSE,
-            colnames = colnames(out),
-            selection = "none",
-            class = "compact stripe row-border nowrap",
-            # Escape the HTML in all except 1st column (which has the buttons)
-            escape = -1,
-            extensions = c("Buttons"),
-            options = list(
-                scrollX = TRUE,
-                dom = 'Bftip',
-                buttons = list(
-                    list(
-                        columnDefs = list(list(className = 'dt-center', targets = "_all")),
-                        extend = "excel",
-                        text = "Download",
-                        title = paste0("samples-", Sys.Date()),
-                        exportOptions = list(
-                            columns = 1:(length(out) - 1)
-                        )
-                    )
-                ),
-                columnDefs = list(
-                    list(className = 'dt-center', targets = "_all"),
-                    list(targets = 10, orderable = TRUE)
-                ),
-                drawCallback = JS("function(settings) {
-                    // removes any lingering tooltips
-                    $('.tooltip').remove()
-                    }"
-                ),
-                pageLength = 20
-            )
-          ) %>%
-            formatDate(
-                columns = c("Filtered_Date","created_at", "modified_at"),
-                method = 'toLocaleString'
-            ) 
-        })
-        sample_table_proxy <- DT::dataTableProxy('sample_table')
+      ## render collections interactive dt
+      output$sample_table <- renderDT({
+        req(sample_table_prep())
+        out <- sample_table_prep()
+        datatable(
+          out,
+          rownames = FALSE,
+          colnames = colnames(out),
+          selection = "none",
+          class = "compact stripe row-border nowrap",
+          # Escape the HTML in all except 1st column (which has the buttons)
+          escape = -1,
+          extensions = c("Buttons"),
+          options = list(
+              scrollX = TRUE,
+              dom = 'Bftip',
+              buttons = list(
+                  list(
+                      columnDefs = list(list(className = 'dt-center', targets = "_all")),
+                      extend = "excel",
+                      text = "Download",
+                      title = paste0("samples-", Sys.Date()),
+                      exportOptions = list(
+                          columns = 1:(length(out) - 1)
+                      )
+                  )
+              ),
+              columnDefs = list(
+                  list(className = 'dt-center', targets = "_all"),
+                  list(targets = 10, orderable = TRUE)
+              ),
+              drawCallback = JS("function(settings) {
+                  // removes any lingering tooltips
+                  $('.tooltip').remove()
+                  }"
+              ),
+              pageLength = 20
+          )
+        ) %>%
+          formatDate(
+              columns = c("created_at", "modified_at"),
+              method = 'toLocaleString'
+          ) 
+      })
+      sample_table_proxy <- DT::dataTableProxy('sample_table')
+      ##############################################
+      ##############################################
 
 
+      ## 
+      #display_table <- reactive({  
+      #  out <- samples()
+      #  return(out)
+      #})
 
+      ## sample_select dt
+      output$sample_select <- renderDT({
+        out <- samples()
+        out <- out[,which(colnames(out) %in% display_col)]
+        return(out)
+      })
+      
+      samples_selected <- reactive({
+        out <- samples()
+        s = input$sample_select_rows_selected
+        out <- out[s,]
+        return(out)
+      })
 
+      
 
-        ## sample_select table
-        output$sample_select <- renderDT({
-          req(sample_table_prep())
-          out <- sample_table_prep()
-          #print(head(  out[,which(colnames(out) %in% display_col_pcr)]   ))
-          out <- out[,which(colnames(out) %in% display_col_pcr)]
-        })
-        sample_select_proxy <- DT::dataTableProxy('sample_select')
-
-
+        ## sample display table
         output$sample_selected <- DT::renderDT({
-          req(sample_table_prep())
-          out <- sample_table_prep()
-          out <- out[,which(colnames(out) %in% display_col_pcr)]
-          s = input$sample_select_rows_selected
-          out <- out[s,]
+
+          out <-  samples_selected()
+          out <- out[,which(colnames(out) %in% display_col)]
    
           datatable(out,
             rownames = FALSE,
@@ -265,6 +226,68 @@ sample_table_module <- function(id, disp, lines = NA) {
             modal_trigger = reactive({input$sample_id_to_delete})
         )
 
+
+        ## this in js     input$sample_select_rows_selected
+        batch <- eventReactive(input$edit_batch,{
+          out <- samples()
+          s = input$sample_select_rows_selected
+          return(out[s,])
+        })
+
+        submodule_edit_batch(
+          "edit_extractions_batch",
+          modal_title = "Edit Batch",
+          batch = batch,
+          modal_trigger = reactive({input$edit_batch})
+        )
+
+
+       ## ##samples_to_edit <- 
+       ## observeEvent(samples(), {
+       ##   out <- samples()
+       ##   ids <- out$uid
+
+        ##batch_uid <-  eventReactive(input$edit_batch, {
+        ## sample_table_prep(out)
+        ##})
+
+
+
+
+      ##submodule_edit_batch(
+      ##      "edit_batch",
+      ##      modal_title = "edit_batch",
+      ##      sample_to_edit_batch = sample_to_edit_batch,
+      ##      modal_trigger = reactive({input$sample_id_to_edit_batch})
+      ##  )
+
+
+
+        #uids_to_edit <-  eventReactive(input$sample_select_rows_selected, {
+        #  req(sample_table_prep())
+        #  out <- sample_table_prep()
+        #  ##print(out[input$sample_select_rows_selected,'uid'])
+        #  print('made it')
+        #})
+#
+        #eventReactive(input$sample_select_rows_selected, {
+        #  print('edit samples')
+        #  #req(sample_table_prep())
+        #  #out <- sample_table_prep()
+        #  #s = input$sample_select_rows_selected
+        #  #out <- out[s,'uid']
+        #  #out
+        #  #print(out)
+        #})
+
+
+
+        ## submodule_batch(
+        ##     "edit_batch",
+        ##     modal_title = "Edit batch of Samples",
+        ##     sample_to_delete = sample_to_delete,
+        ##     modal_trigger = reactive({input$edit_batch})
+        ## )
         ### ### ### ### ### ### ### ### ### ### ### ### 
         ### Edit selected samples on action button ### 
 

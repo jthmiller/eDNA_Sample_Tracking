@@ -90,4 +90,7 @@ dbDisconnect(conn)
    "shiny_app/data/filtersdb.sqlite3"
  )
  dbGetQuery(conn, 'SELECT * FROM filtersdb LIMIT 5')
- dbGetQuery(conn, 'SELECT * FROM filtersdb')
+ trys <- dbGetQuery(conn, 'SELECT * FROM filtersdb')
+
+
+dbExecute(conn, 'ALTER TABLE filtersdb ADD Extracted_date TEXT')

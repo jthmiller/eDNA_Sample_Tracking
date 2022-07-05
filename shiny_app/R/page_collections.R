@@ -1,7 +1,7 @@
 ### Sample collections page
 
 
-sample_table_module_ui <- function(id) {
+collections_page_ui <- function(id) {
   
   ns <- NS(id)
 
@@ -35,7 +35,7 @@ sample_table_module_ui <- function(id) {
       column(
         width = 12,
         title = "Samples",
-        DTOutput(ns('table')) %>%
+        DTOutput(ns('sample_select')) %>%
           withSpinner(),
         tags$br(),
         tags$br()
@@ -45,4 +45,12 @@ sample_table_module_ui <- function(id) {
     tags$script(src = "sample_table_module.js"),
     tags$script(paste0("Database_js('", ns(''), "')"))
   )
+}
+
+collections_page_server <- function(id, disp, lines = NA, button) {
+
+      display_col <- c('project','site1','site2','matrix','Type','Collected_Date','Filtered_Date')
+
+      sample_table_module("collections_page", display_col, button)
+
 }

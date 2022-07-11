@@ -41,8 +41,8 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
                   selectInput(ns('project'), 'Project', c('NERRs','SWMP', 'Other'), selected = ifelse(is.null(hold), "", hold$project)),
                   selectInput(ns('site1'), 'Site1', levels(sites$site)),
                   selectInput(ns('site2'), 'Site2', levels(sites$site2)),
-                  dateInput(ns("Collected_Date"), "Date Collected", value = as.Date('1984-02-02')),
-                  dateInput(ns("Filtered_Date"), "Date Filtered", value = as.Date('1984-02-02')),
+                  dateInput(ns("collected_date"), "Date Collected", value = as.Date('1984-02-02')),
+                  dateInput(ns("filtered_date"), "Date Filtered", value = as.Date('1984-02-02')),
                   selectInput(ns('matrix'), 'Matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
                   selectInput(ns('set_number'), 'Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
                   selectInput(ns('Type'), 'Sample Type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$Type)),
@@ -87,8 +87,8 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               "project" = if (is.null(input$project)) 'NA' else input$project,
               "site1" = if (is.null(input$site1)) 'NA' else input$site1,
               "site2" = if (is.null(input$site2)) 'NA' else input$site2,
-              "Collected_Date" = if (is.null(input$Collected_Date)) 'NA' else input$Collected_Date,
-              "Filtered_Date" = if (is.null(input$Filtered_Date)) 'NA' else input$Filtered_Date,
+              "collected_date" = if (is.null(input$collected_date)) 'NA' else input$collected_date,
+              "filtered_date" = if (is.null(input$filtered_date)) 'NA' else input$filtered_date,
               "matrix" = if (is.null(input$matrix)) 'NA' else input$matrix,
               "Type" = if (is.null(input$Type)) 'NA' else input$Type,
               "set_number" = if (is.null(input$set_number)) 'NA' else input$set_number
@@ -96,8 +96,8 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
             )
           )
           time_now <- as.character(lubridate::with_tz(Sys.time(), tzone = "UTC"))
-          #input$Collected_Date <- as.character(lubridate::with_tz(input$Collected_Date, tzone = "UTC"))
-          #input$Filtered_Date <- as.character(lubridate::with_tz(input$Filtered_Date, tzone = "UTC"))
+          #input$collected_date <- as.character(lubridate::with_tz(input$collected_date, tzone = "UTC"))
+          #input$filtered_date <- as.character(lubridate::with_tz(input$filtered_date, tzone = "UTC"))
           if (is.null(hold)) {
           # adding a new sample
             out$data$created_at <- time_now
@@ -109,10 +109,10 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
           } 
             out$data$modified_at <- time_now
             out$data$modified_by <- session$userData$email
-            out$data$Collected_Date <- as.character(as.POSIXlt(input$Collected_Date))
-            out$data$Filtered_Date <- as.character(as.POSIXlt(input$Filtered_Date))
-            #print(input$Collected_Date)
-            #print(out$data$Collected_Date)
+            out$data$collected_date <- as.character(as.POSIXlt(input$collected_date))
+            out$data$filtered_date <- as.character(as.POSIXlt(input$filtered_date))
+            #print(input$collected_date)
+            #print(out$data$collected_date)
             #print(out$data$modified_at)
             out
         })
@@ -120,11 +120,11 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
         validate_edit <- eventReactive(input$submit, {
           dat <- edit_sample_dat()
           ## Set filtered_date to NA if it wasnt selected
-          ##dat$data$Filtered_Date <- ifelse(!identical(dat$data$Filtered_Date, character(0)), dat$data$Filtered_Date, NA)
+          ##dat$data$filtered_date <- ifelse(!identical(dat$data$filtered_date, character(0)), dat$data$filtered_date, NA)
           # Logic to validate inputs...
           ## sqlite has issue with date. Change to character
-          #dat$data$Collected_Date <- as.character(dat$data$Collected_Date)
-          #dat$data$Filtered_Date <- as.character(dat$data$Filtered_Date)
+          #dat$data$collected_date <- as.character(dat$data$collected_date)
+          #dat$data$filtered_date <- as.character(dat$data$filtered_date)
           dat
         })
 
@@ -143,7 +143,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               ##  ))
               dbExecute(
                 conn,
-                "INSERT INTO filtersdb (uid, project, site1, site2, Collected_date, Filtered_Date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
+                "INSERT INTO filtersdb (uid, project, site1, site2, collected_date, filtered_date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
                 ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
                 params = c(
                   list(uid),
@@ -156,7 +156,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               print(unname(dat$data))
               dbExecute(
                 conn,
-                "UPDATE filtersdb SET project=$1, site1=$2, site2=$3, Collected_date=$4, Filtered_Date=$5, matrix=$6, type=$7, set_number=$8, created_at=$9, created_by=$10, modified_at=$11, modified_by=$12 WHERE uid=$13",
+                "UPDATE filtersdb SET project=$1, site1=$2, site2=$3, collected_date=$4, filtered_date=$5, matrix=$6, type=$7, set_number=$8, created_at=$9, created_by=$10, modified_at=$11, modified_by=$12 WHERE uid=$13",
                 params = c(
                   unname(dat$data),
                   list(dat$uid)

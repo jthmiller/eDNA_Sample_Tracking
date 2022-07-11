@@ -49,7 +49,7 @@ collections_page_ui <- function(id) {
 
 collections_page_server <- function(id, disp, lines = NA, button) {
 
-      display_col <- c('project','site1','site2','matrix','Type','Collected_Date','Filtered_Date')
+      display_col <- c('project','site1','site2','matrix','Type','collected_date','filtered_date')
 
       sample_table_module("collections_page", display_col, button)
 

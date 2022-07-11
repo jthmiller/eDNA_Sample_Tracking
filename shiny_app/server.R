@@ -31,7 +31,7 @@ server <- function(input, output, session) {
   collections_page_server("collections_page")
   PCR_page_server("PCR_page")
   extractions_page_server("extractions_page")
-  
+  add_col_page_server("add_col_page")
 
   ## dat <- sample_table_module("sample_table", disp = display_col_pcr)
   ## dat <- sample_table_module("sample_table", disp = display_col_pcr)

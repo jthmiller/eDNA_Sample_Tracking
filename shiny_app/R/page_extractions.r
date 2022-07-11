@@ -18,18 +18,6 @@ extractions_page_ui <- function(id) {
         DTOutput(ns('sample_selected'))
       )
     ),
-    #fluidRow(
-    #  column(
-    #    width = 8,
-    #    fluidRow(
-    #      box( 
-    #        title = 'Dates',
-    #        dateInput(inputId = "Collected", label = "Collected:"),
-    #        dateInput(inputId = "Extracted", label = "Extracted:"),
-    #        dateInput(inputId = "Filtered", label = "Filtered:"),
-    #        dateInput(inputId = "Cut_Half", label = "Cut in Half:")
-    #      )
-    #    ),
     fluidRow(
       column(width = 8,
         actionButton(ns('edit_batch'),"Edit Batch")
@@ -63,7 +51,7 @@ extractions_page_server  <- function(id, disp) {
 
     #button <- button_server("mod1")
 
-    display_col <- c('project','site1','site2','matrix','Type','Collected_Date','Filtered_Date','Extracted_date', 'Cut_in_half')
+    display_col <- c('project','site1','site2','matrix','type','collected_date','filtered_date','extracted_date', 'cut_in_half')
 
     sample_table_module("extractions_page", display_col, lines = selectedLines)
 }

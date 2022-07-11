@@ -24,6 +24,7 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
 
       session$userData$samples_trigger <- reactiveVal(0)
 
+
       # Read in table from the database      
       samples <- reactive({
 
@@ -151,10 +152,11 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
         return(out)
       })
       
-      samples_selected <- reactive({
+      samples_selected <- eventReactive( input$sample_select_rows_selected,{
         out <- samples()
-        s = input$sample_select_rows_selected
+        s = input$sample_select_rows_selected 
         out <- out[s,]
+        out <- out[,which(colnames(out) %in% display_col)]
         return(out)
       })
 
@@ -162,17 +164,14 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
 
         ## sample display table
         output$sample_selected <- DT::renderDT({
-
-          out <-  samples_selected()
-          out <- out[,which(colnames(out) %in% display_col)]
-   
+          out <- samples_selected()          
           datatable(out,
             rownames = FALSE,
             colnames = colnames(out),
-            selection = "none",
+            selection = list(target = 'column'),
             class = "compact stripe row-border nowrap",
             # Escape the HTML in all except 1st column (which has the buttons)
-            escape = -1,
+            # escape = -1,
             extensions = c("Buttons"),
             options = list(
               buttons = list(
@@ -180,16 +179,16 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
                   columnDefs = list(list(className = 'dt-center', targets = "_all")),
                   extend = "excel",
                   text = "Edit",
-                  title = paste0("samples-", Sys.Date()),
-                  exportOptions = list(
-                    columns = 1:(length(out) - 1)
-                  )
+                  title = paste0("samples-", Sys.Date())
+                  #exportOptions = list(
+                  #  columns = 1:(length(out) - 1)
+                  #)
                 )
               )      
             )
           )
         })
-        sample_selected_proxy <- DT::dataTableProxy('sample_selected')
+        #sample_selected_proxy <- DT::dataTableProxy('sample_selected')
 
         ### Modules for editing ###
         submodule_add(
@@ -226,133 +225,51 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
             modal_trigger = reactive({input$sample_id_to_delete})
         )
 
-
-        ## this in js     input$sample_select_rows_selected
         batch <- eventReactive(input$edit_batch,{
           out <- samples()
           s = input$sample_select_rows_selected
           return(out[s,])
         })
 
-        submodule_edit_batch(
+        selected_cols <- eventReactive(input$edit_batch,{
+          out <- colnames(samples_selected())
+          inx <- input$sample_selected_columns_selected + 1
+          out <- out[inx]
+          out
+        })
+
+        submodule_edit_extractions_batch(
           "edit_extractions_batch",
           modal_title = "Edit Batch",
           batch = batch,
+          selected_cols = selected_cols,
           modal_trigger = reactive({input$edit_batch})
         )
 
+        pcr_batch <- eventReactive(input$edit_pcr_batch,{
+          out <- samples()
+          s = input$sample_select_rows_selected
+          return(out[s,])
+        })
 
-       ## ##samples_to_edit <- 
-       ## observeEvent(samples(), {
-       ##   out <- samples()
-       ##   ids <- out$uid
+        submodule_edit_pcr_batch(
+          "edit_pcr_batch",
+          modal_title = "Edit PCR Batch",
+          pcr_batch = pcr_batch,
+          modal_trigger = reactive({input$edit_pcr_batch})
+        )
 
-        ##batch_uid <-  eventReactive(input$edit_batch, {
-        ## sample_table_prep(out)
-        ##})
+        submodule_edit_qbit(
+          "edit_qbit",
+          modal_title = "Edit Qbit Values",
+          qbit = batch,
+          modal_trigger = reactive({input$edit_pcr_qbit})
+        )
 
-
-
-
-      ##submodule_edit_batch(
-      ##      "edit_batch",
-      ##      modal_title = "edit_batch",
-      ##      sample_to_edit_batch = sample_to_edit_batch,
-      ##      modal_trigger = reactive({input$sample_id_to_edit_batch})
-      ##  )
-
-
-
-        #uids_to_edit <-  eventReactive(input$sample_select_rows_selected, {
-        #  req(sample_table_prep())
-        #  out <- sample_table_prep()
-        #  ##print(out[input$sample_select_rows_selected,'uid'])
-        #  print('made it')
-        #})
-#
-        #eventReactive(input$sample_select_rows_selected, {
-        #  print('edit samples')
-        #  #req(sample_table_prep())
-        #  #out <- sample_table_prep()
-        #  #s = input$sample_select_rows_selected
-        #  #out <- out[s,'uid']
-        #  #out
-        #  #print(out)
-        #})
-
-
-
-        ## submodule_batch(
-        ##     "edit_batch",
-        ##     modal_title = "Edit batch of Samples",
-        ##     sample_to_delete = sample_to_delete,
-        ##     modal_trigger = reactive({input$edit_batch})
-        ## )
-        ### ### ### ### ### ### ### ### ### ### ### ### 
-        ### Edit selected samples on action button ### 
-
-        
-        #samples_to_edit <- eventReactive(input$`extractions_module-table_rows_selected`, {
-        #    #samples() %>%
-        #    #filter(uid == input$sample_id_to_edit)
-        #    #print(samples() %>% filter(uid == input$sample_id_to_edit))
-        #    modal_trigger = reactive({input$edit_samples}),
-        #    print('got inside edit mod')
-        #})
-
-        #samples_to_edit <- eventReactive(input$sample_select_rows_selected, {
-        #  out <- samples() %>%
-        #    filter(uid == input$sample_select_rows_selected) %>%
-        #    as.list()
-        #    ##print(input$sample_select_rows_selected)
-        #})
-
-
-        #Get this to work
-
-
-        #samples_to_edit <- eventReactive(input$edit_samples, {
-        #  #out <- samples() %>%
-        #  #  filter(uid == input$sample_select_rows_selected) %>%
-        #  #  as.list()
-        #  #  print(input$sample_select_rows_selected)
-        #  out <- samples()
-        #  s = input$sample_select_rows_selected
-        #  out <- out[s,]
-#
-        #})
-#
-
-        ## observeEvent(button(), { print('hw button works') })
-
-        #samples_to_edit <- eventReactive(input$sample_select_rows_selected, {
-        #  #out <- samples() %>%
-        #  #  filter(uid == input$sample_select_rows_selected) %>%
-        #  #  as.list()
-        #  #  print(input$sample_select_rows_selected)
-        #  out <- samples()
-        #  s = input$sample_select_rows_selected
-        #  out <- out[s,]
-        #  print(head(out))
-        #})
-        
-
-        #sample_to_edit <- eventReactive(input$sample_id_to_edit, {
-        #    samples() %>%
-        #    filter(uid == input$sample_id_to_edit)
-        #    print(samples() %>% filter(uid == input$sample_id_to_edit))
-        #})
-#
-#
-        #submodule_edit_samples(
-        #    "edit_samples",
-        #    modal_title = "Edit a Batch of Samples",
-        #    samples_to_edit =  samples_to_edit,
-        #    modal_trigger = reactive({input$edit_samples})
-        #)
-
-        ### Edit selected samples on action button
-
+        submodule_add_column(
+          "add_column",
+          modal_title = "Add a New Column",
+        )
     }
   )
 }

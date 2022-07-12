@@ -128,3 +128,59 @@ dbDisconnect(conn)
 quit()
 
 
+
+
+### for testing
+#setwd('eDNA_Sample_Tracking/shiny_app/')
+conn <- dbConnect(
+  RSQLite::SQLite(),
+  "data/filtersdb.sqlite3"
+)
+dbGetQuery(conn, 'SELECT * FROM filtersdb LIMIT 2')
+
+## MANUAL ADD COLUMN
+col_nme <- 'batch'
+dat_type <- 'REAL'
+sql <- paste('ALTER TABLE filtersdb ADD COLUMN', col_nme, dat_type  )
+dbExecute(conn, sql)
+
+
+col_nme <- 'tube_label'
+dat_type <- 'TEXT'
+sql <- paste('ALTER TABLE filtersdb ADD COLUMN', col_nme, dat_type  )
+dbExecute(conn, sql)
+
+
+col_nme <- 'cut_in_half_date'
+dat_type <- 'DATE'
+sql <- paste('ALTER TABLE filtersdb ADD COLUMN', col_nme, dat_type  )
+dbExecute(conn, sql)
+
+
+for (i in c('PCR_Step_1_date', 'qbited_date', 'dil_1_10_date', 'given_to_HCGS_date')) {
+
+dat_type <- 'DATE'
+sql <- paste('ALTER TABLE filtersdb ADD COLUMN', i, dat_type  )
+dbExecute(conn, sql)
+}
+
+
+
+
+col_nme <- 'extracted_initials'
+dat_type <- 'TEXT'
+sql <- paste('ALTER TABLE filtersdb ADD COLUMN', col_nme, dat_type  )
+dbExecute(conn, sql)
+
+
+
+col_nme <- 'sequenced_date'
+dat_type <- 'DATE'
+sql <- paste('ALTER TABLE filtersdb ADD COLUMN',col_nme, dat_type  )
+dbExecute(conn, sql)
+
+
+col_nme <- 'storage'
+dat_type <- 'TEXT'
+sql <- paste('ALTER TABLE filtersdb ADD COLUMN', col_nme, dat_type  )
+dbExecute(conn, sql)

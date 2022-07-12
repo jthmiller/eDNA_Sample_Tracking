@@ -20,3 +20,6 @@ submodule_add_column <- function(id, modal_title, batch, selected_cols, modal_tr
     }
   )
 }
+
+
+

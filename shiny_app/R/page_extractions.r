@@ -32,26 +32,8 @@ extractions_page_ui <- function(id) {
 extractions_page_server  <- function(id, disp) {
 
 
-  #selectedLines <- reactive({
-  #  req(input$`extractions_module-table_rows_selected`)
-  #  if (is.null(input$`extractions_module-table_rows_selected`)) {
-  #    return(NULL)
-  #  } else {
-  #    rows_selected <- as.numeric(input$`extractions_module-table_rows_selected`) # we need to prefix dt_table_rows_selected with the ID of the UI function "my_ID" and a hyphen
-  #  }
-  #  sample_table_module("extractions_module", disp = display_col_pcr, lines = selectedLines)
-  #})
-#
+    display_col <- c('tube_label','batch','set_number','project','site1','site2','matrix','type','collected_date','filtered_date','extracted_date', 'cut_in_half')
+    edit_col <- c('tube_label','project','site1','site2','matrix','type','collected_date','filtered_date','extracted_date', 'cut_in_half','extracted_initials')
+    sample_table_module("extractions_page", display_col, edit_col)
 
-    #smps <- reactive({
-    #      df <- selectedLines()
-    #      return(df)   
-    #    })     
-
-
-    #button <- button_server("mod1")
-
-    display_col <- c('project','site1','site2','matrix','type','collected_date','filtered_date','extracted_date', 'cut_in_half')
-
-    sample_table_module("extractions_page", display_col, lines = selectedLines)
 }

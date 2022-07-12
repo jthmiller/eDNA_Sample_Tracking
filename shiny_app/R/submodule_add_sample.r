@@ -22,7 +22,7 @@
 
 #display_col_pcr
 ### Add sample module 
-submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
+submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
 
     moduleServer(
       id,
@@ -37,15 +37,15 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               fluidRow(
                 column(
                   width = 6,
-                  #numericInput(ns('batch'), 'Number of Samples to Add', 1, min = 1, max = 20),
-                  selectInput(ns('project'), 'Project', c('NERRs','SWMP', 'Other'), selected = ifelse(is.null(hold), "", hold$project)),
-                  selectInput(ns('site1'), 'Site1', levels(sites$site)),
-                  selectInput(ns('site2'), 'Site2', levels(sites$site2)),
-                  dateInput(ns("collected_date"), "Date Collected", value = as.Date('1984-02-02')),
-                  dateInput(ns("filtered_date"), "Date Filtered", value = as.Date('1984-02-02')),
-                  selectInput(ns('matrix'), 'Matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
-                  selectInput(ns('set_number'), 'Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
-                  selectInput(ns('Type'), 'Sample Type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$Type)),
+                  numericInput(ns('batch'), 'Number of Samples to Add', 1, min = 1, max = 20),
+                  selectInput(ns('project'), 'Choose Project', c('NERRs','SWMP', 'Other',NA), selected = ifelse(is.null(hold), "", hold$project)),
+                  selectInput(ns('site1'), 'Site1', c(levels(sites$site),NA)),
+                  selectInput(ns('site2'), 'Site2', c(levels(sites$site2),NA)),
+                  dateInput(ns("collected_date"), "Date collected", value = NULL),
+                  dateInput(ns("filtered_date"), "Date Filtered", value = NULL),
+                  selectInput(ns('matrix'), 'Choose matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
+                  #selectInput(ns('set_number'), 'Choose Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
+                  selectInput(ns('type'), 'Choose Sample type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$type)),
                   selectInput(ns('user'), "Username", c('Jmiller', 'Awatts'))
                   ##uiOutput('add_sample')
                 )
@@ -90,7 +90,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               "collected_date" = if (is.null(input$collected_date)) 'NA' else input$collected_date,
               "filtered_date" = if (is.null(input$filtered_date)) 'NA' else input$filtered_date,
               "matrix" = if (is.null(input$matrix)) 'NA' else input$matrix,
-              "Type" = if (is.null(input$Type)) 'NA' else input$Type,
+              "type" = if (is.null(input$type)) 'NA' else input$type,
               "set_number" = if (is.null(input$set_number)) 'NA' else input$set_number
               ## "add_sample" = input$add_sample,
             )
@@ -102,15 +102,25 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
           # adding a new sample
             out$data$created_at <- time_now
             out$data$created_by <- session$userData$email
+
+            out$data$collected_date <- 'NA'
+            out$data$filtered_date <- 'NA'
+            out$data$matrix <- 'NA'
+            out$data$type <- 'NA'
+
           } else {
           # Editing existing sample
             out$data$created_at <- as.character(hold$created_at)
             out$data$created_by <- hold$created_by
+            ## Convert when edited 
+            #out$data$collected_date <- as.character(as.POSIXlt(input$collected_date))
+            #out$data$filtered_date <- as.character(as.POSIXlt(input$filtered_date))
           } 
             out$data$modified_at <- time_now
             out$data$modified_by <- session$userData$email
-            out$data$collected_date <- as.character(as.POSIXlt(input$collected_date))
-            out$data$filtered_date <- as.character(as.POSIXlt(input$filtered_date))
+            
+
+
             #print(input$collected_date)
             #print(out$data$collected_date)
             #print(out$data$modified_at)
@@ -131,51 +141,60 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
         observeEvent(validate_edit(), {
           removeModal()
           dat <- validate_edit()
-          print(dat$uid)
           tryCatch({
             if (is.na(dat$uid)) {
-              print('creating new samples ...')
-              uid <- uuid::UUIDgenerate()
-              #dat$data$set_number <- rep
-              ##print(c('adding',
-              ##    list(uid),
-              ##    unname(dat$data)
-              ##  ))
-              dbExecute(
-                conn,
-                "INSERT INTO filtersdb (uid, project, site1, site2, collected_date, filtered_date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
-                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
-                params = c(
-                  list(uid),
-                  unname(dat$data)
+              print(dat)
+              for (rep in 1:input$batch ){
+                print('creating new samples ...')
+                uid <- uuid::UUIDgenerate()
+                dat$data$set_number <- rep
+                ##print(c('adding',
+                ##    list(uid),
+                ##    unname(dat$data)
+                ##  ))
+                dbExecute(
+                  conn,
+                  "INSERT INTO filtersdb (uid, project, site1, site2, collected_date, filtered_date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
+                  ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
+                  params = c(
+                    list(uid),
+                    unname(dat$data)
+                  )
                 )
-              )
+              }
+
             } else {
-              # editing an existing sample
-              print('editing sample ...')
-              print(unname(dat$data))
-              dbExecute(
-                conn,
-                "UPDATE filtersdb SET project=$1, site1=$2, site2=$3, collected_date=$4, filtered_date=$5, matrix=$6, type=$7, set_number=$8, created_at=$9, created_by=$10, modified_at=$11, modified_by=$12 WHERE uid=$13",
-                params = c(
-                  unname(dat$data),
-                  list(dat$uid)
-                )
-              )
-            }
-            session$userData$samples_trigger(session$userData$samples_trigger() + 1)
-            showToast("success", paste0(modal_title, " Successs"))
-          }, error = function(error) {
-            msg <- paste0(modal_title, " Error")
-            # print `msg` so that we can find it in the logs
-            print(msg)
-            # print the actual error to log it
-            print(error)
-            # show error `msg` to user.  User can then tell us about error and we can
-            # quickly identify where it cam from based on the value in `msg`
-            showToast("error", msg)
-          })
+          # editing an existing car
+
+          print('editing sample ...')
+
+          dbExecute(
+            conn,
+            "UPDATE filtersdb SET project=$1, site1=$2, site2=$3, set_number=$4, matrix=$5, type=$6, collected_date=$6, filtered_date=$7, created_at=$8, created_by=$9, modified_at=$10, modified_by=$11 WHERE uid=$12",
+            params = c(
+              unname(dat$data),
+              list(dat$uid)
+            )
+          )
+        }
+
+        session$userData$samples_trigger(session$userData$samples_trigger() + 1)
+        showToast("success", paste0(modal_title, " Successs"))
+        }, error = function(error) {
+
+          msg <- paste0(modal_title, " Error")
+
+
+          # print `msg` so that we can find it in the logs
+          print(msg)
+          # print the actual error to log it
+          print(error)
+          # show error `msg` to user.  User can then tell us about error and we can
+          # quickly identify where it cam from based on the value in `msg`
+          showToast("error", msg)
         })
+        })
+
       }
     )
 

@@ -33,14 +33,14 @@ fmt_txt <- function(X){
 
 }
 
-fmtInputType <- function(X){
+fmtInputType <- function(X, input){
   if(dbColNames_type[X] == 'dateInput' ){
     fmt_dates(input[[X]])
   } else if (dbColNames_type[X] == 'textInput')
     fmt_txt(input[[X]])
 }
 
-InputFunction <- function(display_col,display_col_type,ns) {
+InputFunction <- function(display_col, display_col_type, ns) {
 
   if(display_col_type == 'dateInput'){
     dateInput(ns(display_col), label = display_col)

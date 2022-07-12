@@ -20,8 +20,7 @@ ui <- dashboardPage(
             tabItem(tabName = "sample_collection_tab", collections_page_ui("collections_page")),
             tabItem(tabName = "sample_amplified_tab", PCR_page_ui("PCR_page")),
             tabItem(tabName = "sample_extractions_tab", extractions_page_ui("extractions_page")),
-            tabItem(tabName = "database_tab", database_page_ui("database_page"))
-            tabItem(tabName = "add_col_tab", add_col_module_ui("table") )
+            tabItem(tabName = "database_tab",  add_col_page_ui("add_col_page"))
             #tabItem(tabName = "sample_extractions_tab", sample_extraction_ui("text"))
             #tabItem(tabName = "sample_lookup_tab", sample_select_download_ui("sample_selected"))
         )

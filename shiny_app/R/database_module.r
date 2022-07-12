@@ -16,7 +16,7 @@
 ## output a df, inport df() in other functions
 ## use df() inside server (bc values are reactive)
 ## , display_col_pcr , display_col_pcr
-sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
+sample_table_module <- function(id, display_col, edit_col) {
 
   moduleServer(
     id,
@@ -138,33 +138,40 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
       ##############################################
       ##############################################
 
-
-      ## 
-      #display_table <- reactive({  
-      #  out <- samples()
-      #  return(out)
-      #})
-
-      ## sample_select dt
-      output$sample_select <- renderDT({
+      sample_select <- reactive({
         out <- samples()
-        out <- out[,which(colnames(out) %in% display_col)]
+        # out <- out[,which(colnames(out) %in% display_col)]
         return(out)
       })
-      
-      samples_selected <- eventReactive( input$sample_select_rows_selected,{
-        out <- samples()
+
+      output$sample_select <- renderDT({
+        out <- sample_select()
+        # out <- out[,which(colnames(out) %in% display_col)]
+        out <- out[,display_col]
+        return(out)
+      })
+
+      ### This is 2nd row, where cols are selected
+      samples_selected <- eventReactive(input$sample_select_rows_selected,{
+        out <- sample_select()
         s = input$sample_select_rows_selected 
         out <- out[s,]
-        out <- out[,which(colnames(out) %in% display_col)]
         return(out)
       })
 
-      
+      selected_cols <- eventReactive(input$edit_batch,{
+          out <-  samples_selected()
+          out <- out[,edit_col]
+          out <- colnames(out)
+          inx <- input$sample_selected_columns_selected + 1
+          out <- out[inx]
+          out
+        })
 
         ## sample display table
         output$sample_selected <- DT::renderDT({
-          out <- samples_selected()          
+          out <-  samples_selected()
+          out <- out[,edit_col]
           datatable(out,
             rownames = FALSE,
             colnames = colnames(out),
@@ -188,7 +195,6 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
             )
           )
         })
-        #sample_selected_proxy <- DT::dataTableProxy('sample_selected')
 
         ### Modules for editing ###
         submodule_add(
@@ -231,38 +237,25 @@ sample_table_module <- function(id,  display_col =  display_col, lines = NA) {
           return(out[s,])
         })
 
-        selected_cols <- eventReactive(input$edit_batch,{
-          out <- colnames(samples_selected())
-          inx <- input$sample_selected_columns_selected + 1
-          out <- out[inx]
-          out
-        })
-
-        submodule_edit_extractions_batch(
-          "edit_extractions_batch",
+        submodule_edit_batch(
+          "edit_batch",
           modal_title = "Edit Batch",
           batch = batch,
           selected_cols = selected_cols,
           modal_trigger = reactive({input$edit_batch})
         )
 
-        pcr_batch <- eventReactive(input$edit_pcr_batch,{
+        batch <- eventReactive(input$edit_pcr_qbit,{
           out <- samples()
           s = input$sample_select_rows_selected
           return(out[s,])
-        })
 
-        submodule_edit_pcr_batch(
-          "edit_pcr_batch",
-          modal_title = "Edit PCR Batch",
-          pcr_batch = pcr_batch,
-          modal_trigger = reactive({input$edit_pcr_batch})
-        )
+        })
 
         submodule_edit_qbit(
           "edit_qbit",
           modal_title = "Edit Qbit Values",
-          qbit = batch,
+          batch = batch,
           modal_trigger = reactive({input$edit_pcr_qbit})
         )
 

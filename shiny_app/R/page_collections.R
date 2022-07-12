@@ -31,26 +31,16 @@ collections_page_ui <- function(id) {
         tags$br()
       )
     ),
-    fluidRow(
-      column(
-        width = 12,
-        title = "Samples",
-        DTOutput(ns('sample_select')) %>%
-          withSpinner(),
-        tags$br(),
-        tags$br()
-      )
-    ),
     ##includeScript(path = "sample_table_module.js"),
     tags$script(src = "sample_table_module.js"),
     tags$script(paste0("Database_js('", ns(''), "')"))
   )
 }
 
-collections_page_server <- function(id, disp, lines = NA, button) {
+collections_page_server <- function(id) {
 
-      display_col <- c('project','site1','site2','matrix','Type','collected_date','filtered_date')
-
-      sample_table_module("collections_page", display_col, button)
+      display_col <- c('batch','project','site1','site2','matrix','type','collected_date','filtered_date')
+      edit_col <- c('project','site1','site2','matrix','type','collected_date','filtered_date')
+      sample_table_module("collections_page", display_col, edit_col)
 
 }

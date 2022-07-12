@@ -7,8 +7,9 @@ add_col_page_ui <- function(id) {
 
   ns <- NS(id)
 
+  
   tagList(
-
+    tags$br(),
     fluidRow(  
       column(width = 6,
         fluidRow(
@@ -19,16 +20,20 @@ add_col_page_ui <- function(id) {
       ),
     ),
     tags$br(),
+    tags$br(),
+    fluidRow(  
+      column(width = 6,
+        fluidRow(
+            actionButton(ns("backup_database"),"Backup Database")
+        )
+      ),
+    ),
     tags$script(src = "sample_table_module.js"),
     tags$script(paste0("Database_js('", ns(''), "')")) 
   )
 }
 
-add_col_page_server <- function(id, disp, lines = NA, button) {
-
-      ## display_col <- c('project','site1','site2','matrix','Type','collected_date','filtered_date')
-      
-      ## batch_updates <- c('collected_date', 'extracted_date', 'filtered_date', 'cut_in_half', 'modified_at', 'modified_by')
+add_col_page_server <- function(id) {
 
       sample_table_module("add_col_page")
 

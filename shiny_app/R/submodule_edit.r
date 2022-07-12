@@ -41,11 +41,13 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
                   selectInput(ns('project'), 'Project', c('NERRs','SWMP', 'Other'), selected = ifelse(is.null(hold), "", hold$project)),
                   selectInput(ns('site1'), 'Site1', levels(sites$site)),
                   selectInput(ns('site2'), 'Site2', levels(sites$site2)),
+                  textInput(ns('batch'), 'Batch Number'),
+                  textInput(ns('set_number'), 'Set Number'),
                   dateInput(ns("collected_date"), "Date Collected", value = as.Date('1984-02-02')),
                   dateInput(ns("filtered_date"), "Date Filtered", value = as.Date('1984-02-02')),
                   selectInput(ns('matrix'), 'Matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
                   selectInput(ns('set_number'), 'Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
-                  selectInput(ns('Type'), 'Sample Type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$Type)),
+                  selectInput(ns('type'), 'Sample Type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$type)),
                   selectInput(ns('user'), "Username", c('Jmiller', 'Awatts'))
                   ##uiOutput('add_sample')
                 )
@@ -85,12 +87,14 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
             uid = if (is.null(hold)) NA else hold$uid,
             data = list(
               "project" = if (is.null(input$project)) 'NA' else input$project,
+              "batch" = if (is.null(input$batch)) 'NA' else input$batch,
+              "set_number" = if (is.null(input$set_number)) 'NA' else input$set_number,
               "site1" = if (is.null(input$site1)) 'NA' else input$site1,
               "site2" = if (is.null(input$site2)) 'NA' else input$site2,
               "collected_date" = if (is.null(input$collected_date)) 'NA' else input$collected_date,
               "filtered_date" = if (is.null(input$filtered_date)) 'NA' else input$filtered_date,
               "matrix" = if (is.null(input$matrix)) 'NA' else input$matrix,
-              "Type" = if (is.null(input$Type)) 'NA' else input$Type,
+              "type" = if (is.null(input$type)) 'NA' else input$type,
               "set_number" = if (is.null(input$set_number)) 'NA' else input$set_number
               ## "add_sample" = input$add_sample,
             )
@@ -143,7 +147,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               ##  ))
               dbExecute(
                 conn,
-                "INSERT INTO filtersdb (uid, project, site1, site2, collected_date, filtered_date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
+                "INSERT INTO filtersdb (uid, project, batch, set_number, site1, site2, collected_date, filtered_date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
                 ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
                 params = c(
                   list(uid),
@@ -156,7 +160,7 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
               print(unname(dat$data))
               dbExecute(
                 conn,
-                "UPDATE filtersdb SET project=$1, site1=$2, site2=$3, collected_date=$4, filtered_date=$5, matrix=$6, type=$7, set_number=$8, created_at=$9, created_by=$10, modified_at=$11, modified_by=$12 WHERE uid=$13",
+                "UPDATE filtersdb SET project=$1, batch=$2, set_number=$3, site1=$4, site2=$5, collected_date=$6, filtered_date=$7, matrix=$8, type=$9, set_number=$10, created_at=$11, created_by=$12, modified_at=$13, modified_by=$14 WHERE uid=$15",
                 params = c(
                   unname(dat$data),
                   list(dat$uid)

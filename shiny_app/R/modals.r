@@ -7,13 +7,18 @@
 
 
 
-extractionModal <- function(input, output, session, modal_title, selected_cols ) {
+batchModal <- function(input, output, session, modal_title, selected_cols ) {
       
     # load the namespace
     ns <- session$ns
 
+    vars <- list(dbColNames,dbColNames_type)
     inputList <- pmap(vars, InputFunction, ns)
-    names(inputList) <- display_col
+    names(inputList) <- dbColNames
+
+    print(inputList)
+
+
     cols <- selected_cols()
     inputList <- inputList[cols]
 
@@ -41,38 +46,39 @@ extractionModal <- function(input, output, session, modal_title, selected_cols )
     )
 }
 
-
-pcrModal <- function(input, output, session, modal_title) {
+qbitModal <- function(input, output, session, modal_title, batch ) {
       
     # load the namespace
     ns <- session$ns
 
 
+    to_edit <- batch()
+    cols <- c('tube_label','qbit_conc','qbited_date')
+    to_edit <- to_edit[cols]
 
+    # build the modal
     modalDialog(
-      fluidRow(
-        box( 
-          dateInput(ns("Extracted"), label = "Extracted:"),
-          dateInput(ns("PCR_Step_1"), label = "PCR Step 1:"),
-          dateInput(ns("Qbited"), label = "Qbited:"),
-          selectInput(ns('Storage'),  label = 'Choose Storage', c('Strip Tubes','PCR Plate')),
-          dateInput(ns("Dil_1_10"), label = "Straight DNA Diluted 1:10:"),
-          dateInput(ns("HCGS"), label = "Undiluted Step 1 PCR given to Jeff with list of samples:"),
-          dateInput(ns("Sequenced"), label = "Sequenced:"),
-          fileInput(ns('gels'), label = 'Gel Picture Upload', multiple = T, accept='image/*'),
-          actionButton(ns('edit_pcr_batch'),"Edit Batch")
+        fluidRow(
+            column(
+              width = 6,
+
+                renderDT(to_edit, editable = 'column')
+
+            )
+        ),
+        title = modal_title,
+        size = 'm',
+        footer = list(
+          modalButton('Cancel'),
+          actionButton(
+            ns('submit'),
+            'Submit',
+            class = "btn btn-primary",
+            style = "color: white"
+          )
         )
-      ),
-      title = modal_title,
-      size = 'm',
-      footer = list(
-        modalButton('Cancel'),
-        actionButton(
-          ns('submit'),
-          'Submit',
-          class = "btn btn-primary",
-          style = "color: white"
-        )
-      )
     )
+
+
+
 }

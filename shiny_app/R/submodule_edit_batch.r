@@ -22,7 +22,7 @@
 
 #display_col_pcr
 ### Add sample module 
-submodule_edit_extractions_batch <- function(id, modal_title, batch, selected_cols, modal_trigger) {
+submodule_edit_batch <- function(id, modal_title, batch, selected_cols, modal_trigger) {
 
     moduleServer(
       id,
@@ -34,7 +34,7 @@ submodule_edit_extractions_batch <- function(id, modal_title, batch, selected_co
         observeEvent(modal_trigger(), {
             hold <- batch()
             cols <- selected_cols()
-            showModal(extractionModal(input, output, session, modal_title, selected_cols )) 
+            showModal(batchModal(input, output, session, modal_title, selected_cols )) 
         })
 
 
@@ -46,8 +46,9 @@ submodule_edit_extractions_batch <- function(id, modal_title, batch, selected_co
 
           cols <- selected_cols()
           print(names(input))
+          print(cols)
 
-          listval <- lapply(cols, fmtInputType)
+          listval <- lapply(cols, fmtInputType, input)
           names(listval) <- cols
 
           ## temp table to write
@@ -93,7 +94,7 @@ submodule_edit_extractions_batch <- function(id, modal_title, batch, selected_co
             # editing an existing sample
             print('editing batch ...')
             updates <- dat %>% select(-uid) %>% colnames()
-            print(updates)
+            ## print(updates)
             sql <- paste0("UPDATE filtersdb SET ",updates," = (SELECT temp_batch.", updates, " FROM temp_batch WHERE temp_batch.uid = filtersdb.uid ) WHERE EXISTS ( SELECT * FROM temp_batch WHERE temp_batch.uid = filtersdb.uid)")
             sapply(sql, FUN = dbExecute, conn = conn)
             showToast("success", paste0(modal_title, " Successs"))

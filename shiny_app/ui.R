@@ -5,6 +5,8 @@ ui <- dashboardPage(
 
     dashboardSidebar(
         sidebarMenu(
+            menuItem("Sites", tabName = "sites_tab", icon = icon("earth", verify_fa = FALSE)),
+            menuItem("Species IDs", tabName = "tax_tab", icon = icon("fish")),
             menuItem("Sample Collection", tabName = "sample_collection_tab", icon = icon("water")),
             menuItem("Extractions Input", tabName = "sample_extractions_tab", icon = icon("vial")),
             menuItem("PCR Input", tabName = "sample_amplified_tab", icon = icon("vials")),
@@ -20,7 +22,9 @@ ui <- dashboardPage(
             tabItem(tabName = "sample_collection_tab", collections_page_ui("collections_page")),
             tabItem(tabName = "sample_amplified_tab", PCR_page_ui("PCR_page")),
             tabItem(tabName = "sample_extractions_tab", extractions_page_ui("extractions_page")),
-            tabItem(tabName = "database_tab",  add_col_page_ui("add_col_page"))
+            tabItem(tabName = "database_tab",  add_col_page_ui("add_col_page")),
+            tabItem(tabName = "tax_tab",  tax_page_ui("tax_page")),
+            tabItem(tabName = "sites_tab",  sites_page_ui("sites"))
             #tabItem(tabName = "sample_extractions_tab", sample_extraction_ui("text"))
             #tabItem(tabName = "sample_lookup_tab", sample_select_download_ui("sample_selected"))
         )

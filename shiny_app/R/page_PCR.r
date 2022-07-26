@@ -11,7 +11,7 @@ PCR_page_ui <- function(id) {
     fluidRow(
       column(width = 12,
         title = "Samples to add to the database",
-        DTOutput(ns('sample_select'))
+        DTOutput(ns('sample_view'))
       )
     ),
     fluidRow(
@@ -27,7 +27,7 @@ PCR_page_ui <- function(id) {
       ),
       column(width = 3,
         fluidRow(
-          actionButton(ns("edit_pcr_qbit"),"Enter Qbit Values")
+          actionButton(ns("edit_values"),"Enter Sample Values")
         )
       ),
       column(width = 3,
@@ -42,10 +42,11 @@ PCR_page_ui <- function(id) {
   )
 }
 
-PCR_page_server <- function(id, disp, lines = NA, button) {
+PCR_page_server <- function(id, disp) {
 
       display_col <- c('tube_label','project','site1','site2','matrix','type','collected_date','filtered_date')
       edit_col <- c('tube_label','qbited_date','qbit_conc','cut_in_half_date','PCR_Step_1_date','dil_1_10_date','given_to_HCGS_date','sequenced_date','storage')
+      edit_val <- c('qbited_date','qbit_conc')
       sample_table_module("PCR_page", display_col, edit_col)
 
 }

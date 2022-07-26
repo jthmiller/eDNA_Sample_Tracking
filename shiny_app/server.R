@@ -6,5 +6,6 @@ server <- function(input, output, session) {
   PCR_page_server("PCR_page")
   extractions_page_server("extractions_page")
   add_col_page_server("add_col_page")
-
+  tax_page_server ("tax_page")
+  sites_page_server("sites")
 }

@@ -36,6 +36,8 @@ submodule_edit_qbit <- function(id, modal_title, modal_trigger, batch) {
 
             edits <- batch()
 
+            print('modal triggered')
+
             showModal(qbitModal(input, output, session, modal_title, batch )) 
             
 

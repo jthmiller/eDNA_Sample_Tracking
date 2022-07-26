@@ -22,7 +22,7 @@
 
 #display_col_pcr
 ### Add sample module 
-submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
+submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger, batch_num) {
 
     moduleServer(
       id,
@@ -32,18 +32,20 @@ submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
         
         observeEvent(modal_trigger(), {
           hold <- sample_to_edit()
+
+
           showModal(
             modalDialog(
               fluidRow(
                 column(
                   width = 6,
                   numericInput(ns('batch'), 'Number of Samples to Add', 1, min = 1, max = 20),
-                  selectInput(ns('project'), 'Choose Project', c('NERRs','SWMP', 'Other',NA), selected = ifelse(is.null(hold), "", hold$project)),
-                  selectInput(ns('site1'), 'Site1', c(levels(sites$site),NA)),
-                  selectInput(ns('site2'), 'Site2', c(levels(sites$site2),NA)),
+                  selectInput(ns('project'), 'Choose Project', c('NERRs','SWMP', 'Other',NA)),
+                  selectInput(ns('site1'), 'Site1', c(levels(sites$NERR.Long),NA)),
+                  selectInput(ns('site2'), 'Site2', c(levels(sites$Sample.Site.Name.Long),NA)),
                   dateInput(ns("collected_date"), "Date collected", value = NULL),
                   dateInput(ns("filtered_date"), "Date Filtered", value = NULL),
-                  selectInput(ns('matrix'), 'Choose matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
+                  selectInput(ns('matrix'), 'Choose matrix', c('sediment','water')),
                   #selectInput(ns('set_number'), 'Choose Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
                   selectInput(ns('type'), 'Choose Sample type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$type)),
                   selectInput(ns('user'), "Username", c('Jmiller', 'Awatts'))
@@ -80,6 +82,8 @@ submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
         })
 
         edit_sample_dat <- reactive({
+          batch <- batch_num()
+
           hold <- sample_to_edit()
           out <- list(
             uid = if (is.null(hold)) NA else hold$uid,
@@ -91,7 +95,8 @@ submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
               "filtered_date" = if (is.null(input$filtered_date)) 'NA' else input$filtered_date,
               "matrix" = if (is.null(input$matrix)) 'NA' else input$matrix,
               "type" = if (is.null(input$type)) 'NA' else input$type,
-              "set_number" = if (is.null(input$set_number)) 'NA' else input$set_number
+              "set_number" = if (is.null(input$set_number)) NA else input$set_number,
+              "batch" = if (is.null(input$batch)) batch else input$batch
               ## "add_sample" = input$add_sample,
             )
           )
@@ -103,22 +108,18 @@ submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
             out$data$created_at <- time_now
             out$data$created_by <- session$userData$email
 
-            out$data$collected_date <- 'NA'
-            out$data$filtered_date <- 'NA'
-            out$data$matrix <- 'NA'
-            out$data$type <- 'NA'
-
           } else {
           # Editing existing sample
             out$data$created_at <- as.character(hold$created_at)
             out$data$created_by <- hold$created_by
             ## Convert when edited 
-            #out$data$collected_date <- as.character(as.POSIXlt(input$collected_date))
-            #out$data$filtered_date <- as.character(as.POSIXlt(input$filtered_date))
+            out$data$collected_date <- as.character(input$collected_date)
+            out$data$filtered_date <- as.character(input$filtered_date)
           } 
             out$data$modified_at <- time_now
             out$data$modified_by <- session$userData$email
-            
+            out$data$collected_date <- as.character(input$collected_date)
+            out$data$filtered_date <- as.character(input$filtered_date) 
 
 
             #print(input$collected_date)
@@ -132,15 +133,17 @@ submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
           ## Set filtered_date to NA if it wasnt selected
           ##dat$data$filtered_date <- ifelse(!identical(dat$data$filtered_date, character(0)), dat$data$filtered_date, NA)
           # Logic to validate inputs...
-          ## sqlite has issue with date. Change to character
+          ## sqlite has issue with date. date to character
           #dat$data$collected_date <- as.character(dat$data$collected_date)
           #dat$data$filtered_date <- as.character(dat$data$filtered_date)
           dat
         })
 
         observeEvent(validate_edit(), {
+          
           removeModal()
           dat <- validate_edit()
+
           tryCatch({
             if (is.na(dat$uid)) {
               print(dat)
@@ -154,8 +157,8 @@ submodule_add <- function(id, modal_title, sample_to_edit, modal_trigger) {
                 ##  ))
                 dbExecute(
                   conn,
-                  "INSERT INTO filtersdb (uid, project, site1, site2, collected_date, filtered_date, matrix, type, set_number, created_at, created_by, modified_at, modified_by) VALUES
-                  ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)",
+                  "INSERT INTO filtersdb (uid, project, site1, site2, collected_date, filtered_date, matrix, type, set_number, batch, created_at, created_by, modified_at, modified_by) VALUES
+                  ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
                   params = c(
                     list(uid),
                     unname(dat$data)

@@ -4,6 +4,7 @@
 ### https://mastering-shiny.org/action-dynamic.html#dynamic-visibility
 
 
+##devtools::install_github('jbryer/DTedit')
 
 
 
@@ -16,7 +17,7 @@ batchModal <- function(input, output, session, modal_title, selected_cols ) {
     inputList <- pmap(vars, InputFunction, ns)
     names(inputList) <- dbColNames
 
-    print(inputList)
+    ## print(inputList)
 
 
     cols <- selected_cols()
@@ -82,3 +83,46 @@ qbitModal <- function(input, output, session, modal_title, batch ) {
 
 
 }
+
+
+valuesModal <- function(input, output, session, modal_title, to_edit) {
+      
+  ns <- session$ns
+
+  output$to_edit <- DT::renderDT(to_edit$data, editable = TRUE, selection = 'none',
+    options = list(
+                columnDefs = list(list(visible=FALSE, targets=c(1)))
+                )
+  )
+
+  observeEvent(input$to_edit_cell_edit, {
+    row  <- input$to_edit_cell_edit$row
+    clmn <- input$to_edit_cell_edit$col
+    to_edit$data[row, clmn] <<- input$to_edit_cell_edit$value
+  })
+    
+
+    # build the modal
+    modalDialog(
+        fluidRow(
+              DTOutput(ns('to_edit'))
+        ),
+        title = modal_title,
+        size = 'm',
+        footer = list(
+          modalButton('Cancel'),
+          actionButton(
+            ns('submit'),
+            'Submit',
+            class = "btn btn-primary",
+            style = "color: white"
+          )
+        )
+    )
+}
+
+
+
+
+
+

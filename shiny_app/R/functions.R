@@ -49,8 +49,30 @@ InputFunction <- function(display_col, display_col_type, ns) {
   }
 } 
 
+getdb <- function(X){
+
+  conn <- dbConnect(
+    RSQLite::SQLite(),
+    "/Users/jeffreymiller/Documents/projects/shiny_sample_database/eDNA_Sample_Tracking/shiny_app/data/filtersdb.sqlite3"
+  )
+  return( tibble(dbGetQuery(conn, paste0('SELECT * FROM filtersdb LIMIT ',X)) ))
+}
 
 
 
 
+	##### Callback functions for editDT
+	my.insert.callback <- function(data, row) {
+		mydata <- rbind(data, mydata)
+		return(mydata)
+	}
 
+	my.update.callback <- function(data, olddata, row) {
+		mydata[row,] <- data[1,]
+		return(mydata)
+	}
+
+	my.delete.callback <- function(data, row) {
+		mydata <- mydata[-row,]
+		return(mydata)
+	}

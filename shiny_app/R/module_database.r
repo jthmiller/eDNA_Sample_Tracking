@@ -16,11 +16,13 @@
 ## output a df, inport df() in other functions
 ## use df() inside server (bc values are reactive)
 ## , display_col_pcr , display_col_pcr
-sample_table_module <- function(id, display_col, edit_col) {
+sample_table_module <- function(id, display_col, edit_col, edit_values) {
 
   moduleServer(
     id,
     function(input, output, session){
+
+      print('loaded module server for the database')
 
       session$userData$samples_trigger <- reactiveVal(0)
 
@@ -36,8 +38,8 @@ sample_table_module <- function(id, display_col, edit_col) {
             tbl('filtersdb') %>%
             collect() %>%
             mutate(
-              created_at = as.POSIXct(created_at, tz = "UTC"),
-              modified_at = as.POSIXct(modified_at, tz = "UTC")
+              created_at = as.POSIXct(created_at, tz = "UTC", format="%m/%d/%Y, %H:%M:%S"),
+              modified_at = as.POSIXct(modified_at, tz = "UTC", format="%m/%d/%Y, %H:%M:%S")
             ) %>%
             arrange(desc(modified_at))
         }, error = function(err) {
@@ -60,6 +62,7 @@ sample_table_module <- function(id, display_col, edit_col) {
       ## react to samples() edit
       observeEvent(samples(), {
         out <- samples()
+
         ids <- out$uid
         actions <- purrr::map_chr(ids, function(id_) {
           paste0(
@@ -94,6 +97,9 @@ sample_table_module <- function(id, display_col, edit_col) {
       output$sample_table <- renderDT({
         req(sample_table_prep())
         out <- sample_table_prep()
+        
+        out <- data.frame(cbind( edit = out[,1],out[,display_col]))
+
         datatable(
           out,
           rownames = FALSE,
@@ -138,40 +144,60 @@ sample_table_module <- function(id, display_col, edit_col) {
       ##############################################
       ##############################################
 
+      #Holds all samples to be selected
       sample_select <- reactive({
         out <- samples()
+        ##mydata(out)
         # out <- out[,which(colnames(out) %in% display_col)]
         return(out)
       })
 
-      output$sample_select <- renderDT({
+
+      ### Top table ###
+      ## View subset of columns specific to tab
+      sample_view <- reactive({
         out <- sample_select()
         # out <- out[,which(colnames(out) %in% display_col)]
         out <- out[,display_col]
         return(out)
       })
 
-      ### This is 2nd row, where cols are selected
-      samples_selected <- eventReactive(input$sample_select_rows_selected,{
-        out <- sample_select()
-        s = input$sample_select_rows_selected 
-        out <- out[s,]
+      output$sample_view <- renderDT({  
+        out <- sample_view()
+        #print(out)
         return(out)
       })
+      ### Top table ###
 
-      selected_cols <- eventReactive(input$edit_batch,{
-          out <-  samples_selected()
-          out <- out[,edit_col]
+      ## Second row dynamic table ## 
+      samples_selected <- eventReactive(input$sample_view_rows_selected,{
+        ## out <- sample_view()
+        out <- sample_select()
+        s = input$sample_view_rows_selected 
+        out <- out[s,edit_col]
+        #print(out)
+        return(out)        
+      })
+
+      ## Returns names of columns that will be edited 
+      selected_cols <- eventReactive(input$sample_selected_columns_selected,{
+          out <- samples_selected()
           out <- colnames(out)
           inx <- input$sample_selected_columns_selected + 1
+          inx <- sort(inx)
           out <- out[inx]
-          out
+          return(out)
         })
-
-        ## sample display table
-        output$sample_selected <- DT::renderDT({
-          out <-  samples_selected()
-          out <- out[,edit_col]
+   
+      batch <- eventReactive(input$sample_view_rows_selected,{
+          out <- samples()
+          s = input$sample_view_rows_selected
+          #print(out[s,])
+          return(out[s,])
+        })
+        
+      output$sample_selected <- DT::renderDT({
+          out <- samples_selected()
           datatable(out,
             rownames = FALSE,
             colnames = colnames(out),
@@ -195,21 +221,92 @@ sample_table_module <- function(id, display_col, edit_col) {
             )
           )
         })
+      ## Second row dynamic table ## 
+
+
+      #output$sample_selected <- renderDT({  
+      #  out <- samples_selected()
+      #  print(out)
+      #  return(out)
+      #})
+      #edit_results <- dtedit(
+      #  input, output,
+      #  name = 'display_edits',
+      #  thedata = mydata
+      #  #useairDatepicker = TRUE
+      #)
+        
+      #observeEvent(edit_results$thedata, {
+      #  # the data has been added
+      #  # copy the changes to our own copy
+      #  mydata(edit_results$thedata)
+      #})
+  
+      #observeEvent(samples_selected(),{
+      #  # out <- out[,which(colnames(out) %in% display_col)]
+      #  out <- samples_selected()
+      #    mydata(out)
+      #})
+      #observeEvent(Edit_Results$thedata, {
+      #  # the data has been added
+      #  # copy the changes to our own copy
+      #  mydata(Edit_Results$thedata)
+      #})
+        ##samples_selected() <- reactiveVal(NULL)
+
+	      ###### Create the DTedit object when samples are selected
+        #observeEvent(samples_selected(), {
+        #  #eventReactive(input$sample_select_rows_selected,{
+        #  cols <- c('uid','FID','replicate','matrix','type')
+        #  print('observed')
+        #  out <- samples_selected()
+        #  ##print(out)
+        #  str(out)
+        #  print(cols)
+        #  print(colnames(out))
+        #  #callModule(editModule, 'display_editsModule', out = out)
+        #  #print(session)
+  	    #  #DTedit::dtedit(input, output,
+	      #	#   name = 'edits',
+	      #	#   thedata = out,
+	      #	#   edit.cols = cols,
+	      #	#   #edit.label.cols = cols,
+	      #	#   #input.types = c(notes='textAreaInput'),
+	      #	#   #view.cols = cols,
+	      #	#   callback.update = my.update.callback,
+	      #	#   callback.insert = my.insert.callback,
+	      #	#   callback.delete = my.delete.callback)
+        #})
+
+
+
+
 
         ### Modules for editing ###
+        ## Assign each bactch of added samples a new batch number
+        batch_num <- eventReactive(input$add_sample,{
+          batch <- samples()
+          batch <- max(batch$batch) + 1
+          #print(batch)
+        })
+
+        ## Adding a new batch of samples
         submodule_add(
             "add_sample",
             modal_title = "Add a Batch of Samples",
             sample_to_edit = function(){NULL},
+            batch_num = batch_num,
             modal_trigger = reactive({input$add_sample})
         )
 
+        ## Get all columns for the sample to edit
         sample_to_edit <- eventReactive(input$sample_id_to_edit, {
             samples() %>%
             filter(uid == input$sample_id_to_edit)
             ##print(samples() %>% filter(uid == input$sample_id_to_edit))
         })
 
+        ## looks for sample id input from sample_table_module.js
         submodule_edit(
             "edit_sample",
             modal_title = "Edit sample",
@@ -217,7 +314,7 @@ sample_table_module <- function(id, display_col, edit_col) {
             modal_trigger = reactive({input$sample_id_to_edit})
         )
 
-
+        ## looks for sample id input from sample_table_module.js
         sample_to_delete <- eventReactive(input$sample_id_to_delete, {
           out <- samples() %>%
             filter(uid == input$sample_id_to_delete) %>%
@@ -231,11 +328,6 @@ sample_table_module <- function(id, display_col, edit_col) {
             modal_trigger = reactive({input$sample_id_to_delete})
         )
 
-        batch <- eventReactive(input$edit_batch,{
-          out <- samples()
-          s = input$sample_select_rows_selected
-          return(out[s,])
-        })
 
         submodule_edit_batch(
           "edit_batch",
@@ -245,13 +337,6 @@ sample_table_module <- function(id, display_col, edit_col) {
           modal_trigger = reactive({input$edit_batch})
         )
 
-        batch <- eventReactive(input$edit_pcr_qbit,{
-          out <- samples()
-          s = input$sample_select_rows_selected
-          return(out[s,])
-
-        })
-
         submodule_edit_qbit(
           "edit_qbit",
           modal_title = "Edit Qbit Values",
@@ -259,9 +344,17 @@ sample_table_module <- function(id, display_col, edit_col) {
           modal_trigger = reactive({input$edit_pcr_qbit})
         )
 
+        submodule_edit_values(
+          "edit_values",
+          modal_title = "Edit Values",
+          batch = batch,
+          selected_cols = selected_cols,
+          modal_trigger = reactive({input$edit_values})
+        )
+
         submodule_add_column(
           "add_column",
-          modal_title = "Add a New Column",
+          modal_title = "Add a New Column"
         )
     }
   )

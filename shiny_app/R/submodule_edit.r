@@ -39,14 +39,13 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
                   width = 6,
                   #numericInput(ns('batch'), 'Number of Samples to Add', 1, min = 1, max = 20),
                   selectInput(ns('project'), 'Project', c('NERRs','SWMP', 'Other'), selected = ifelse(is.null(hold), "", hold$project)),
-                  selectInput(ns('site1'), 'Site1', levels(sites$site)),
-                  selectInput(ns('site2'), 'Site2', levels(sites$site2)),
-                  textInput(ns('batch'), 'Batch Number'),
-                  textInput(ns('set_number'), 'Set Number'),
-                  dateInput(ns("collected_date"), "Date Collected", value = as.Date('1984-02-02')),
-                  dateInput(ns("filtered_date"), "Date Filtered", value = as.Date('1984-02-02')),
+                  selectInput(ns('site1'), 'Site1', choices = levels(sites$NERR.Long), selected =  ifelse(is.null(hold$site1), NA, hold$site1)),
+                  selectInput(ns('site2'), 'Site2', choices = levels(sites$Sample.Site.Name.Long), selected =  ifelse(is.null(hold$site2), NA, hold$site2)),
+                  textInput(ns('batch'), 'Batch Number', value = ifelse(is.null(hold$batch), NA, hold$batch)),
+                  textInput(ns('set_number'), 'Number in set', value = ifelse(is.null(hold$set_number), NA, hold$set_number)),
+                  dateInput(ns("collected_date"), "Date Collected", value = ifelse(is.null(hold$collected_date), "", hold$collected_date)  ),
+                  dateInput(ns("filtered_date"), "Date Filtered", value = ifelse(is.null(hold$filtered_date), "", hold$filtered_date)),
                   selectInput(ns('matrix'), 'Matrix', c('sediment','water'), selected = ifelse(is.null(hold), "", hold$matrix)),
-                  selectInput(ns('set_number'), 'Replicate', c(0:10), selected = ifelse(is.null(hold), "", hold$set_number)),
                   selectInput(ns('type'), 'Sample Type', c('Sample','Trip Blank', 'Filter Blank', 'Lab Blank','Extraction Blank','PCR Blank'), selected = ifelse(is.null(hold), "", hold$type)),
                   selectInput(ns('user'), "Username", c('Jmiller', 'Awatts'))
                   ##uiOutput('add_sample')
@@ -113,8 +112,10 @@ submodule_edit <- function(id, modal_title, sample_to_edit, modal_trigger) {
           } 
             out$data$modified_at <- time_now
             out$data$modified_by <- session$userData$email
-            out$data$collected_date <- as.character(as.POSIXlt(input$collected_date))
-            out$data$filtered_date <- as.character(as.POSIXlt(input$filtered_date))
+            out$data$collected_date <- as_date(input$collected_date)
+            out$data$filtered_date <- as_date(input$filtered_date)
+
+
             #print(input$collected_date)
             #print(out$data$collected_date)
             #print(out$data$modified_at)

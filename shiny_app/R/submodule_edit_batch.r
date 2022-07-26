@@ -42,12 +42,10 @@ submodule_edit_batch <- function(id, modal_title, batch, selected_cols, modal_tr
         edit_sample_dat <- reactive({
           
           hold <- batch()
+          cols <- selected_cols()
           time_now <- as.character(lubridate::with_tz(Sys.time(), tzone = "UTC"))
 
-          cols <- selected_cols()
-          print(names(input))
-          print(cols)
-
+        
           listval <- lapply(cols, fmtInputType, input)
           names(listval) <- cols
 

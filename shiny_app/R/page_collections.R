@@ -39,8 +39,8 @@ collections_page_ui <- function(id) {
 
 collections_page_server <- function(id) {
 
-      display_col <- c('batch','project','site1','site2','matrix','type','collected_date','filtered_date')
-      edit_col <- c('project','site1','site2','matrix','type','collected_date','filtered_date')
+      display_col <- c('tube_label','batch','project','site1','site2','matrix','type','collected_date','filtered_date',"created_at", "modified_at")
+      edit_col <- c('tube_label','project','site1','site2','matrix','type','collected_date','filtered_date')
       sample_table_module("collections_page", display_col, edit_col)
 
 }
